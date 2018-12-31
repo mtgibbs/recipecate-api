@@ -1,4 +1,3 @@
-
 const connectionInfo = require('./connection-info.dev.json');
 
 module.exports = {
