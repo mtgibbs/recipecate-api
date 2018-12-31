@@ -17,6 +17,7 @@ exports.up = function (knex, Promise) {
             table.integer('recipe_id').references('recipe.id');
             table.integer('ingredient_id').references('ingredient.id');
             table.float('amount').notNullable();
+            table.string('unit_of_measurement', 20).notNullable();
         })
     ]);
 };

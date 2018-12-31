@@ -5,7 +5,7 @@ exports.seed = function (knex, Promise) {
     .then(() => {
       return knex('ingredient').del()
         .then(() => {
-          return knex('table_name').insert([
+          return knex('ingredient').insert([
             { id: 1, name: 'White Onion' },
             { id: 2, name: 'Yellow Onion' },
             { id: 3, name: 'Butter' },
