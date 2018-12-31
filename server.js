@@ -1,23 +1,38 @@
-import Hapi from 'hapi';
 
-const server = new Hapi.Server();
+const Hapi = require('hapi');
+const knex = require('./knex');
 
-server.connection({
-    port: 8080
+const server = new Hapi.Server({
+    port: 8080,
+    host: 'localhost'
 });
 
-server.start(err => {
-    if (err) {
-        console.error(err);
-    }
-
-    console.log(`Server started at ${server.info.uri}`);
-});
-
-server.route( {
+server.route({
     path: '/recipes',
     method: 'GET',
-    handler: (request, reply) => {
-
+    handler: async (request, h) => {
+        const results = await knex.from('recipe').select('id', 'name');
+        if (!results || results.length === 0) {
+            return {
+                count: 0,
+                data: []
+            };
+        }
+        return {
+            count: results.length,
+            data: results
+        };
     }
 });
+
+const init = async () => {
+    await server.start();
+    console.log(`Server started at ${server.info.uri}`);
+}
+
+process.on('unhandledRejection', (err) => {
+    console.log(err);
+    process.exit(1);
+});
+
+init();

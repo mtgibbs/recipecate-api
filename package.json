@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "migrate": "knex migrate:latest",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "api": "node server.js"
   },
   "author": "mtgibbs <matt@mtgibbs.xyz>",
   "license": "Apache v2.0",

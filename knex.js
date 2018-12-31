@@ -1,6 +1,6 @@
 const connectionInfo = require('./connection-info.dev.json');
 
-export default require('knex')({
+module.exports = require('knex')({
     client: 'pg',
     connection: connectionInfo
 });
