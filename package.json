@@ -1,0 +1,16 @@
+{
+  "name": "recipecate-api",
+  "version": "0.0.1",
+  "description": "The API for tracking recipes in the Postgres DB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mtgibbs",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^17.8.1",
+    "knex": "^0.16.3",
+    "pg": "7.7.1"
+  }
+}
