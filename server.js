@@ -8,6 +8,7 @@ const Joi = require('joi');
 const knex = require('./knex');
 const recipeSchemas = require('./schema/recipe.schema');
 
+
 const server = new Hapi.Server({
     port: 8080,
     host: 'localhost'
@@ -16,6 +17,7 @@ const server = new Hapi.Server({
 const init = async () => {
 
     const swaggerOptions = {
+        cors: true,
         deReference: false,
         info: {
             title: 'Recipecate API Documentation',
@@ -52,7 +54,8 @@ server.route([
             tags: ['api', 'recipes'],
             response: {
                 schema: recipeSchemas.recipeListResponseSchema
-            }
+            },
+            cors: true
         },
         handler: async (request, h) => {
             const results = await knex('recipe').select('id', 'name');
@@ -72,6 +75,7 @@ server.route([
         path: '/recipes/{id}/detail',
         method: 'GET',
         options: {
+            cors: true,
             tags: ['api', 'recipes'],
             validate: {
                 params: {
@@ -114,6 +118,7 @@ server.route([
         path: '/recipes/add',
         method: 'POST',
         options: {
+            cors: true,
             tags: ['api', 'recipes'],
             validate: {
                 payload: recipeSchemas.recipeRequestSchema
