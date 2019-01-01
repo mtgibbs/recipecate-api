@@ -79,7 +79,12 @@ server.route([
                     recipe.ingredients = await knex('ingredient')
                         .join('recipes_ingredients', { 'ingredient.id': 'recipes_ingredients.ingredient_id' })
                         .where({ 'recipes_ingredients.recipe_id': recipeId })
-                        .select('*');
+                        .select([
+                            'ingredient_id as id',
+                            'name',
+                            'amount',
+                            'unit_of_measurement'
+                        ]);
                     return recipe;
                 });
 
