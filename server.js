@@ -138,15 +138,13 @@ server.route([
                 return h.response('Recipe with that name already exists').code(422);
             }
 
-            knex.transaction(async (trx) => {
+            await knex.transaction(async (trx) => {
 
                 try {
                     const recipeId = (await knex('recipe')
                         .transacting(trx)
                         .insert({ name: recipeToAdd.name, instructions: recipeToAdd.instructions })
                         .returning('id'))[0];
-
-                    console.log(recipeId);
 
                     for (const ingredient of recipeToAdd.ingredients) {
                         const ingredientIdLookup = await knex('ingredient').where({ name: ingredient.name }).select('id').first();
@@ -156,12 +154,14 @@ server.route([
                             ingredient.id = ingredientIdLookup.id;
                         }
 
-                        await knex('recipes_ingredients').insert({
-                            amount: ingredient.amount,
-                            unit_of_measurement: ingredient.unit_of_measurement,
-                            recipe_id: recipeId,
-                            ingredient_id: ingredient.id
-                        });
+                        await knex('recipes_ingredients')
+                            .transacting(trx)
+                            .insert({
+                                amount: ingredient.amount,
+                                unit_of_measurement: ingredient.unit_of_measurement,
+                                recipe_id: recipeId,
+                                ingredient_id: ingredient.id
+                            });
                     }
 
                     trx.commit();
@@ -171,9 +171,6 @@ server.route([
                 }
 
             });
-
-
-
 
             return h.response().code(200);
         }
