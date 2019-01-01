@@ -34,18 +34,23 @@ server.route([
 
             const recipeId = request.params.id;
 
-            const result = await
-                knex('recipe')
-                    .join('recipes_ingredients', { 'recipe.id': 'recipes_ingredients.recipe_id' })
-                    .join('ingredient', { 'ingredient.id': 'recipes_ingredients.ingredient_id' })
-                    .where({ 'recipe.id': recipeId })
-                    .select('*');
+            const recipe = await knex.from('recipe')
+                .select('id', 'name', 'instructions')
+                .where({ 'id': recipeId })
+                .first()
+                .then(async recipe => {
+                    recipe.ingredients = await knex('ingredient')
+                        .join('recipes_ingredients', { 'ingredient.id': 'recipes_ingredients.ingredient_id' })
+                        .where({ 'recipes_ingredients.recipe_id': recipeId })
+                        .select('*');
+                    return recipe;
+                });
 
-            if (!result || result.length === 0) {
+            if (!recipe) {
                 return h.response(null).code(404);
             }
 
-            return result[0];
+            return recipe;
         }
     }
 ]);
