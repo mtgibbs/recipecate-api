@@ -12,10 +12,11 @@
   "license": "Apache v2.0",
   "dependencies": {
     "hapi": "17.8.1",
-    "hapi-swagger": "^9.3.0",
-    "inert": "^5.1.2",
+    "hapi-swagger": "9.3.0",
+    "inert": "5.1.2",
+    "joi": "14.3.1",
     "knex": "0.16.3",
     "pg": "7.7.1",
-    "vision": "^5.4.4"
+    "vision": "5.4.4"
   }
 }
