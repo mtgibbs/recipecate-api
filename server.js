@@ -130,21 +130,50 @@ server.route([
                 }
             */
 
-            const payload = request.payload;
+            const recipeToAdd = request.payload;
 
-            // just attempt to add all of the ingredients that they've got listed
-            payload.ingredients.forEach(async i => {
+            const recipeLookup = await knex('recipe').where({ name: recipeToAdd.name }).first();
+
+            if (recipeLookup) {
+                return h.response('Recipe with that name already exists').code(422);
+            }
+
+            knex.transaction(async (trx) => {
 
                 try {
-                    const ingredientIdLookup = await knex('ingredient').where({ name: i.name }).select('id').first();
-                    if (!ingredientIdLookup) {
-                        i.id = (await knex('ingredient').insert({ name: i.name }).returning('id'))[0];
-                    } else {
-                        i.id = ingredientIdLookup.id;
+                    const recipeId = (await knex('recipe')
+                        .transacting(trx)
+                        .insert({ name: recipeToAdd.name, instructions: recipeToAdd.instructions })
+                        .returning('id'))[0];
+
+                    console.log(recipeId);
+
+                    for (const ingredient of recipeToAdd.ingredients) {
+                        const ingredientIdLookup = await knex('ingredient').where({ name: ingredient.name }).select('id').first();
+                        if (!ingredientIdLookup) {
+                            ingredient.id = (await knex('ingredient').transacting(trx).insert({ name: ingredient.name }).returning('id'))[0];
+                        } else {
+                            ingredient.id = ingredientIdLookup.id;
+                        }
+
+                        await knex('recipes_ingredients').insert({
+                            amount: ingredient.amount,
+                            unit_of_measurement: ingredient.unit_of_measurement,
+                            recipe_id: recipeId,
+                            ingredient_id: ingredient.id
+                        });
                     }
-                    console.log(i);
-                } catch (e) { }
+
+                    trx.commit();
+                } catch (e) {
+                    console.error(e);
+                    trx.rollback();
+                }
+
             });
+
+
+
 
             return h.response().code(200);
         }
