@@ -94,6 +94,60 @@ server.route([
 
             return recipe;
         }
+    },
+    {
+        path: '/recipes/add',
+        method: 'POST',
+        options: {
+            tags: ['api', 'recipes']
+        },
+        handler: async (request, h) => {
+
+            /* EXAMPLE PAYLOAD --- WHYYYYYYYY DIDNT I JUST USE TYPESCRIPT.....
+                {
+                    "name": "Hot Cocoa",
+                    "instructions": "Mix it together....  Duh",
+                    "ingredients": [
+                        {
+                            "id": 4,
+                            "name": "Sugar",
+                            "amount": 1.5,
+                            "unit_of_measurement": "cup"
+                        },
+                        {
+                            "id": 5,
+                            "name": "Cocoa Powder",
+                            "amount": 1,
+                            "unit_of_measurement": "cup"
+                        },
+                        {
+                            "id": 6,
+                            "name": "Cayenne Pepper",
+                            "amount": 1,
+                            "unit_of_measurement": "tsp"
+                        }
+                    ]
+                }
+            */
+
+            const payload = request.payload;
+
+            // just attempt to add all of the ingredients that they've got listed
+            payload.ingredients.forEach(async i => {
+
+                try {
+                    const ingredientIdLookup = await knex('ingredient').where({ name: i.name }).select('id').first();
+                    if (!ingredientIdLookup) {
+                        i.id = (await knex('ingredient').insert({ name: i.name }).returning('id'))[0];
+                    } else {
+                        i.id = ingredientIdLookup.id;
+                    }
+                    console.log(i);
+                } catch (e) { }
+            });
+
+            return h.response().code(200);
+        }
     }
 ]);
 
