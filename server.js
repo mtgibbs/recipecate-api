@@ -16,7 +16,7 @@ const server = new Hapi.Server({
 const init = async () => {
 
     const swaggerOptions = {
-        deReference: true,
+        deReference: false,
         info: {
             title: 'Recipecate API Documentation',
             version: '0.0.1',
@@ -55,21 +55,21 @@ server.route([
             }
         },
         handler: async (request, h) => {
-            const results = await knex.from('recipe').select('id', 'name');
+            const results = await knex('recipe').select('id', 'name');
             if (!results || results.length === 0) {
                 return {
                     count: 0,
-                    data: []
+                    items: []
                 };
             }
             return {
                 count: results.length,
-                data: results
+                items: results
             };
         }
     },
     {
-        path: '/recipes/{id}',
+        path: '/recipes/{id}/detail',
         method: 'GET',
         options: {
             tags: ['api', 'recipes'],
