@@ -7,10 +7,12 @@ exports.up = function (knex, Promise) {
             table.string('name', 200).notNullable();
             table.string('instructions', 1000);
 
+            table.unique('name');
         }),
         knex.schema.createTable('ingredient', table => {
             table.increments('id').primary();
             table.string('name', 200).notNullable();
+            table.unique('name');
         }),
         knex.schema.createTable('recipes_ingredients', table => {
             table.increments('id').primary();
@@ -18,6 +20,8 @@ exports.up = function (knex, Promise) {
             table.integer('ingredient_id').references('ingredient.id');
             table.float('amount').notNullable();
             table.string('unit_of_measurement', 20).notNullable();
+
+            table.unique(['recipe_id', 'ingredient_id']);
         })
     ]);
 };
