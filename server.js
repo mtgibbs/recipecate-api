@@ -3,6 +3,7 @@ const Hapi = require('hapi');
 const Inert = require('inert');
 const Vision = require('vision');
 const HapiSwagger = require('hapi-swagger');
+const Joi = require('joi');
 
 const knex = require('./knex');
 const recipeSchemas = require('./schema/recipe.schema');
@@ -15,6 +16,7 @@ const server = new Hapi.Server({
 const init = async () => {
 
     const swaggerOptions = {
+        deReference: true,
         info: {
             title: 'Recipecate API Documentation',
             version: '0.0.1',
@@ -71,6 +73,11 @@ server.route([
         method: 'GET',
         options: {
             tags: ['api', 'recipes'],
+            validate: {
+                params: {
+                    id: Joi.number().integer().required()
+                }
+            },
             response: {
                 schema: recipeSchemas.recipeResponseSchema
             }
