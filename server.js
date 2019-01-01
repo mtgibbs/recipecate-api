@@ -1,9 +1,12 @@
 
 const Hapi = require('hapi');
-const knex = require('./knex');
 const Inert = require('inert');
 const Vision = require('vision');
+const Joi = require('joi');
 const HapiSwagger = require('hapi-swagger');
+
+const knex = require('./knex');
+
 
 const server = new Hapi.Server({
     port: 8080,
@@ -65,7 +68,22 @@ server.route([
         path: '/recipes/{id}',
         method: 'GET',
         options: {
-            tags: ['api', 'recipes']
+            tags: ['api', 'recipes'],
+            response: {
+                schema: Joi.object({
+                    id: Joi.number().integer().required(),
+                    name: Joi.string(),
+                    instructions: Joi.string(),
+                    ingredients: Joi.array().items(
+                        Joi.object({
+                            id: Joi.number().integer(),
+                            name: Joi.string(),
+                            amount: Joi.number(),
+                            unit_of_measurement: Joi.string()
+                        })
+                    )
+                })
+            }
         },
         handler: async (request, h) => {
 
