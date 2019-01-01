@@ -2,11 +2,10 @@
 const Hapi = require('hapi');
 const Inert = require('inert');
 const Vision = require('vision');
-const Joi = require('joi');
 const HapiSwagger = require('hapi-swagger');
 
 const knex = require('./knex');
-
+const recipeSchemas = require('./schema/recipe.schema');
 
 const server = new Hapi.Server({
     port: 8080,
@@ -48,7 +47,10 @@ server.route([
         path: '/recipes',
         method: 'GET',
         options: {
-            tags: ['api', 'recipes']
+            tags: ['api', 'recipes'],
+            response: {
+                schema: recipeSchemas.recipeListResponseSchema
+            }
         },
         handler: async (request, h) => {
             const results = await knex.from('recipe').select('id', 'name');
@@ -70,19 +72,7 @@ server.route([
         options: {
             tags: ['api', 'recipes'],
             response: {
-                schema: Joi.object({
-                    id: Joi.number().integer().required(),
-                    name: Joi.string(),
-                    instructions: Joi.string(),
-                    ingredients: Joi.array().items(
-                        Joi.object({
-                            id: Joi.number().integer(),
-                            name: Joi.string(),
-                            amount: Joi.number(),
-                            unit_of_measurement: Joi.string()
-                        })
-                    )
-                })
+                schema: recipeSchemas.recipeResponseSchema
             }
         },
         handler: async (request, h) => {
@@ -117,7 +107,10 @@ server.route([
         path: '/recipes/add',
         method: 'POST',
         options: {
-            tags: ['api', 'recipes']
+            tags: ['api', 'recipes'],
+            validate: {
+                payload: recipeSchemas.recipeRequestSchema
+            }
         },
         handler: async (request, h) => {
 
@@ -127,19 +120,16 @@ server.route([
                     "instructions": "Mix it together....  Duh",
                     "ingredients": [
                         {
-                            "id": 4,
                             "name": "Sugar",
                             "amount": 1.5,
                             "unit_of_measurement": "cup"
                         },
                         {
-                            "id": 5,
                             "name": "Cocoa Powder",
                             "amount": 1,
                             "unit_of_measurement": "cup"
                         },
                         {
-                            "id": 6,
                             "name": "Cayenne Pepper",
                             "amount": 1,
                             "unit_of_measurement": "tsp"
@@ -149,7 +139,6 @@ server.route([
             */
 
             const recipeToAdd = request.payload;
-
             const recipeLookup = await knex('recipe').where({ name: recipeToAdd.name }).first();
 
             if (recipeLookup) {
