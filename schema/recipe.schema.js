@@ -5,15 +5,14 @@ const ingredientResponseSchema = Joi.object({
     name: Joi.string(),
     amount: Joi.number(),
     unit_of_measurement: Joi.string()
-}).label("ingredient");
+}).label("recipeIngredientDetail");
 
 const recipeResponseSchema = Joi.object({
     id: Joi.number().integer().required(),
     name: Joi.string(),
     instructions: Joi.string(),
-    ingredients: Joi.array().items(ingredientResponseSchema)
+    ingredients: Joi.array().items(ingredientResponseSchema).label('ingredientDetails')
 }).label("recipe");
-
 
 const recipeListInfo = new Joi.object({
     id: Joi.number().integer(),
@@ -34,7 +33,7 @@ const ingredientRequestSchema = Joi.object({
 const recipeRequestSchema = Joi.object({
     name: Joi.string().max(200).required(),
     instructions: Joi.string().max(1000),
-    ingredients: Joi.array().min(1).required().items(ingredientRequestSchema).label('ingredientsRequest')
+    ingredients: Joi.array().min(1).required().items(ingredientRequestSchema).label('ingredientRequests')
 }).label("recipeRequest");
 
 module.exports = {

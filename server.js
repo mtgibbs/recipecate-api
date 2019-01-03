@@ -7,7 +7,7 @@ const Joi = require('joi');
 
 const knex = require('./knex');
 const recipeSchemas = require('./schema/recipe.schema');
-
+const ingredientSchemas = require('./schema/ingredient.schema');
 
 const server = new Hapi.Server({
     port: 8080,
@@ -168,6 +168,21 @@ server.route([
             });
 
             return h.response().code(200);
+        }
+    },
+    {
+        path: '/ingredients',
+        method: 'GET',
+        options: {
+            cors: true,
+            tags: ['api', 'ingredients'],
+            response: {
+                schema: ingredientSchemas.ingredientsResponseSchema
+            }
+        },
+        handler: async (request, h) => {
+            const ingredients = await knex('ingredient').select('id', 'name');
+            return ingredients;
         }
     }
 ]);
