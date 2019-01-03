@@ -126,30 +126,6 @@ server.route([
         },
         handler: async (request, h) => {
 
-            /* EXAMPLE PAYLOAD --- WHYYYYYYYY DIDNT I JUST USE TYPESCRIPT.....
-                {
-                    "name": "Hot Cocoa",
-                    "instructions": "Mix it together....  Duh",
-                    "ingredients": [
-                        {
-                            "name": "Sugar",
-                            "amount": 1.5,
-                            "unit_of_measurement": "cup"
-                        },
-                        {
-                            "name": "Cocoa Powder",
-                            "amount": 1,
-                            "unit_of_measurement": "cup"
-                        },
-                        {
-                            "name": "Cayenne Pepper",
-                            "amount": 1,
-                            "unit_of_measurement": "tsp"
-                        }
-                    ]
-                }
-            */
-
             const recipeToAdd = request.payload;
             const recipeLookup = await knex('recipe').where({ name: recipeToAdd.name }).first();
 
