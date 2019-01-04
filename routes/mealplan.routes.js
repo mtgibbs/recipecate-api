@@ -15,7 +15,9 @@ const getMealPlansRoute = {
         }
     },
     handler: async (request, h) => {
-        return await knex('mealplan').select('id', 'name', 'created_date');
+        return await knex('mealplan')
+            .select('id', 'name', 'created_date')
+            .orderBy('created_date', 'desc');
     }
 };
 
