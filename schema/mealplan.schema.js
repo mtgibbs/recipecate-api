@@ -21,7 +21,7 @@ const mealPlanDetailsResponseSchema = Joi.object({
 const addMealPlanRequestSchema = Joi.object({
     name: Joi.string().required().max(200),
     notes: Joi.string().max(500),
-    recipeIds: Joi.array().items(Joi.number().integer())
+    recipeIds: Joi.array().items(Joi.number().integer()).min(1)
 }).label('addMealPlanRequest');
 
 module.exports = {
