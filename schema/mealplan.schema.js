@@ -13,7 +13,7 @@ const mealPlanListResponseSchema = Joi.array().items(mealPlanResponseSchema).lab
 const mealPlanDetailsResponseSchema = Joi.object({
     id: Joi.number().integer().required(),
     name: Joi.string().required(),
-    createdDate: Joi.date().timestamp().required(),
+    createdDate: Joi.date().required(),
     notes: Joi.string().allow(null),
     recipes: Joi.array().items(recipeSchemas.recipeListInfo).label('mealPlanRecipes')
 }).label('mealPlanDetails');
