@@ -15,17 +15,22 @@ const getMealPlansRoute = {
         }
     },
     handler: async (request, h) => {
-        const result = await knex('mealplan')
-            .select('id', 'name', 'notes', 'created_at')
-            .orderBy('created_at', 'desc');
 
-        if (!result || result.length === 0) {
-            return [];
+        try {
+            let result = await knex('meal_plan')
+                .select('id', 'name', 'notes', 'created_at as createdDate')
+                .orderBy('id', 'desc');
+
+            if (!result || result.length === 0) {
+                return [];
+            }
+
+            return result;
+
+        } catch (e) {
+            console.error(e);
+            throw e;
         }
-
-        console.log(result);
-
-        return result;
     }
 };
 
