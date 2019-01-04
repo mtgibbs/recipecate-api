@@ -6,8 +6,9 @@ exports.up = function (knex, Promise) {
             knex.schema.createTable('meal_plan', table => {
                 table.increments('id').primary();
                 table.string('name', 200).notNullable();
-                table.datetime('created_date').notNullable();
                 table.string('notes', 500);
+
+                table.timestamps(true, true);
             }),
             knex.schema.createTable('meal_plan_recipe', table => {
                 table.integer('meal_plan_id').references('meal_plan.id');
@@ -22,6 +23,7 @@ exports.up = function (knex, Promise) {
                 table.string('unit_of_measurement', 20).notNullable(); // TODO: Turn this into its own enum table
 
                 table.unique(['meal_plan_id', 'ingredient_id', 'unit_of_measurement']);
+                table.timestamps(true, true);
             })
         ]
     )
