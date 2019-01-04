@@ -51,7 +51,7 @@ const addMealPlanRoute =
                     .transacting(trx)
                     .insert({
                         name: mealPlanToAdd.name,
-                        notes: mealPlanToAdd.instructions
+                        notes: mealPlanToAdd.notes
                     })
                     .returning('id'))[0];
 
