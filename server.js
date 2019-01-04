@@ -6,6 +6,7 @@ const HapiSwagger = require('hapi-swagger');
 
 const recipeRoutes = require('./routes/recipe.routes');
 const ingredientRoutes = require('./routes/ingredient.routes');
+const mealPlanRoutes = require('./routes/mealplan.routes');
 
 const server = new Hapi.Server({
     port: 8080,
@@ -46,5 +47,6 @@ init();
 // register routes
 server.route([
     ...recipeRoutes,
-    ...ingredientRoutes
+    ...ingredientRoutes,
+    ...mealPlanRoutes
 ]);
