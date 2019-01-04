@@ -15,8 +15,9 @@ const recipeResponseSchema = Joi.object({
 }).label("recipe");
 
 const recipeListInfo = new Joi.object({
-    id: Joi.number().integer(),
-    name: Joi.string()
+    id: Joi.number().integer().required(),
+    name: Joi.string().required(),
+    instructions: Joi.string()
 }).label("recipeListItem");
 
 const recipeListResponseSchema = Joi.object({
@@ -41,5 +42,6 @@ module.exports = {
     recipeResponseSchema: recipeResponseSchema,
     recipeListResponseSchema: recipeListResponseSchema,
     ingredientRequestSchema: ingredientRequestSchema,
-    recipeRequestSchema: recipeRequestSchema
+    recipeRequestSchema: recipeRequestSchema,
+    recipeListInfo: recipeListInfo
 }

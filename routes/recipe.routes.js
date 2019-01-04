@@ -64,7 +64,7 @@ const getRecipeDetailRoute = {
             });
 
         if (!recipe) {
-            return h.response(null).code(404);
+            return h.response("Not Found").code(404);
         }
 
         return recipe;

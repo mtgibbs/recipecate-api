@@ -1,13 +1,32 @@
 const Joi = require('joi');
+const recipeSchemas = require('./recipe.schema');
 
 const mealPlanResponseSchema = Joi.object({
-    id: Joi.number().integer().require(),
+    id: Joi.number().integer().required(),
     name: Joi.string().required(),
-    createdDate: Joi.date().timestamp().requireed(),
+    createdDate: Joi.date().timestamp().required(),
     notes: Joi.string()
 }).label('mealPlan');
 
+const mealPlanListResponseSchema = Joi.array().items(mealPlanResponseSchema).label('mealPlans');
+
+const mealPlanDetailsResponseSchema = Joi.object({
+    id: Joi.number().integer().required(),
+    name: Joi.string().required(),
+    createdDate: Joi.date().timestamp().required(),
+    notes: Joi.string(),
+    recipes: Joi.array().items(recipeSchemas.recipeListInfo).label('mealPlanRecipes')
+}).label('mealPlanDetails');
+
+const addMealPlanRequestSchema = Joi.object({
+    name: Joi.string().required().max(200),
+    notes: Joi.string().max(500),
+    recipeIds: Joi.array().items(Joi.number().integer())
+}).label('addMealPlanRequest');
 
 module.exports = {
-    mealPlanResponseSchema: mealPlanResponseSchema
+    mealPlanResponseSchema: mealPlanResponseSchema,
+    mealPlanListResponseSchema: mealPlanListResponseSchema,
+    mealPlanDetailsResponseSchema: mealPlanDetailsResponseSchema,
+    addMealPlanRequestSchema: addMealPlanRequestSchema
 };
