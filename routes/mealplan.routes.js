@@ -1,5 +1,5 @@
 
-const mealPlanSchema = require('../schema/mealplan.schema');
+const mealPlanSchemas = require('../schema/mealplan.schema');
 const ingredientSchemas = require('../schema/ingredient.schema');
 const knex = require('../knex');
 
@@ -10,11 +10,55 @@ const getMealPlansRoute = {
         cors: true,
         tags: ['api', 'mealplan'],
         response: {
-            schema: mealPlanSchema.mealPlanListResponseSchema
+            schema: mealPlanSchemas.mealPlanListResponseSchema
         }
     },
     handler: async (request, h) => {
         return await knex('mealplan').select('id', 'name', 'created_date');
+    }
+};
+
+const addMealPlanRoute =
+{
+    path: '/mealplan/add',
+    method: 'POST',
+    options: {
+        cors: true,
+        tags: ['api', 'mealplan'],
+        validate: {
+            payload: mealPlanSchemas.addMealPlanRequestSchema
+        }
+    },
+    handler: async (request, h) => {
+        const mealPlanToAdd = request.payload;
+        
+        let mpId = 0;
+        await knex.transaction(async (trx) => {
+
+            try {
+                mpId = (await knex('meal_plan')
+                    .transacting(trx)
+                    .insert({ name: recipeToAdd.name, instructions: recipeToAdd.instructions })
+                    .returning('id'))[0];
+              
+                const rows = mealPlanToAdd.recipeIds.map(recipeId => {
+                    return {
+                        meal_plan_id: mpId,
+                        recipe_id: recipeId
+                    };
+                });
+
+                await knex.batchInsert('meal_plan_recipe', rows, 50).transacting(trx);
+                trx.commit();
+            } catch (e) {
+                console.error(e);
+                trx.rollback();
+                throw e;
+            }
+
+        });
+
+        return h.response({ mealPlanId: mpId }).code(200);
     }
 };
 
@@ -25,7 +69,7 @@ const getMealPlansDetailsRoute = {
         cors: true,
         tags: ['api', 'mealplan'],
         response: {
-            schema: mealPlanSchema.mealPlanDetailsResponseSchema
+            schema: mealPlanSchemas.mealPlanDetailsResponseSchema
         }
     },
     handler: async (request, h) => {
@@ -89,7 +133,7 @@ const getIngredientsForMealPlan = {
 
         return ingredients;
     }
-}
+};
 
 module.exports = [
     getMealPlansRoute,
