@@ -4,7 +4,7 @@ const recipeSchemas = require('./recipe.schema');
 const mealPlanResponseSchema = Joi.object({
     id: Joi.number().integer().required(),
     name: Joi.string().required(),
-    notes: Joi.string()
+    notes: Joi.string().allow(null),
     createdDate: Joi.date().required()
 }).label('mealPlan');
 
@@ -14,7 +14,7 @@ const mealPlanDetailsResponseSchema = Joi.object({
     id: Joi.number().integer().required(),
     name: Joi.string().required(),
     createdDate: Joi.date().timestamp().required(),
-    notes: Joi.string(),
+    notes: Joi.string().allow(null),
     recipes: Joi.array().items(recipeSchemas.recipeListInfo).label('mealPlanRecipes')
 }).label('mealPlanDetails');
 
