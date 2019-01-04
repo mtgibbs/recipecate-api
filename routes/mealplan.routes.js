@@ -98,33 +98,39 @@ const getMealPlansDetailsRoute = {
     },
     handler: async (request, h) => {
 
-        const mpId = parseInt(request.params.id);
+        try {
+            const mpId = parseInt(request.params.id);
 
-        const mealPlan = await knex('mealplan')
-            .select('id', 'name', 'created_at', 'notes')
-            .where({ 'id': mpId })
-            .first();
+            const mealPlan = await knex('meal_plan')
+                .select('id', 'name', 'created_at', 'notes')
+                .where({ 'id': mpId })
+                .first();
 
-        if (!mealPlan) {
-            return h.response("Not Found").code(404);
+            if (!mealPlan) {
+                return h.response("Not Found").code(404);
+            }
+
+            const recipes = await knex('recipe')
+                .join('meal_plan_recipe', { 'recipe.id': 'meal_plan_recipe.recipe_id' })
+                .where({ 'meal_plan_recipe.meal_plan_id': mpId })
+                .select([
+                    'recipe_id as id',
+                    'name',
+                    'instructions'
+                ]);
+
+            return {
+                id: mealPlan.id,
+                name: mealPlan.name,
+                createdDate: mealPlan.created_at,
+                notes: mealPlan.notes,
+                recipes: recipes
+            };
         }
-
-        const recipes = await knex('recipe')
-            .join('meal_plan_recipe', { 'recipe.id': 'meal_plan_recipe.recipe_id' })
-            .where({ 'meal_plan_recipe.meal_plan_id': mpId })
-            .select([
-                'recipe_id as id',
-                'name',
-                'instructions'
-            ]);
-
-        return {
-            id: mealPlan.id,
-            name: mealPlan.name,
-            createdDate: mealPlan.created_at,
-            notes: notes,
-            recipes: recipes
-        };
+        catch (e) {
+            console.error(e);
+            throw e;
+        }
     }
 };
 
@@ -166,7 +172,7 @@ const getIngredientsForMealPlan = {
 
 module.exports = [
     getMealPlansRoute,
-    getIngredientsForMealPlan,
     getMealPlansDetailsRoute,
+    getIngredientsForMealPlan,
     addMealPlanRoute
 ];
