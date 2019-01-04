@@ -130,13 +130,14 @@ server.route([
             const recipeLookup = await knex('recipe').where({ name: recipeToAdd.name }).first();
 
             if (recipeLookup) {
-                return h.response('Recipe with that name already exists').code(422);
+                return h.response('Recipe with that name already exists').code(409);
             }
 
+            let recipeId = 0;
             await knex.transaction(async (trx) => {
 
                 try {
-                    const recipeId = (await knex('recipe')
+                    recipeId = (await knex('recipe')
                         .transacting(trx)
                         .insert({ name: recipeToAdd.name, instructions: recipeToAdd.instructions })
                         .returning('id'))[0];
@@ -167,7 +168,7 @@ server.route([
 
             });
 
-            return h.response().code(200);
+            return h.response({ recipeId: recipeId }).code(200);
         }
     },
     {
