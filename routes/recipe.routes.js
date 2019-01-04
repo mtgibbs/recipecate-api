@@ -121,6 +121,7 @@ const addRecipePostRoute = {
             } catch (e) {
                 console.error(e);
                 trx.rollback();
+                throw e;
             }
 
         });
