@@ -2,6 +2,7 @@
 const mealPlanSchemas = require('../schema/mealplan.schema');
 const ingredientSchemas = require('../schema/ingredient.schema');
 const knex = require('../knex');
+const Joi = require('joi');
 
 const getMealPlansRoute = {
     path: '/mealplan',
@@ -70,6 +71,11 @@ const getMealPlansDetailsRoute = {
         tags: ['api', 'mealplan'],
         response: {
             schema: mealPlanSchemas.mealPlanDetailsResponseSchema
+        },
+        validate: {
+            params: {
+                id: Joi.number().integer().required()
+            }
         }
     },
     handler: async (request, h) => {
@@ -112,6 +118,11 @@ const getIngredientsForMealPlan = {
         tags: ['api', 'mealplan'],
         response: {
             schema: ingredientSchemas.measuredIngredientsListResponseSchema
+        },
+        validate: {
+            params: {
+                id: Joi.number().integer().required()
+            }
         }
     },
     handler: async (request, h) => {
@@ -138,5 +149,6 @@ const getIngredientsForMealPlan = {
 module.exports = [
     getMealPlansRoute,
     getIngredientsForMealPlan,
-    getMealPlansDetailsRoute
+    getMealPlansDetailsRoute,
+    addMealPlanRoute
 ];
