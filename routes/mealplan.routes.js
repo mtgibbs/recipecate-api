@@ -34,16 +34,20 @@ const addMealPlanRoute =
     },
     handler: async (request, h) => {
         const mealPlanToAdd = request.payload;
-        
+
         let mpId = 0;
         await knex.transaction(async (trx) => {
 
             try {
                 mpId = (await knex('meal_plan')
                     .transacting(trx)
-                    .insert({ name: recipeToAdd.name, instructions: recipeToAdd.instructions })
+                    .insert({
+                        name: mealPlanToAdd.name,
+                        notes: mealPlanToAdd.instructions,
+                        created_date: new Date().getTime()
+                    })
                     .returning('id'))[0];
-              
+
                 const rows = mealPlanToAdd.recipeIds.map(recipeId => {
                     return {
                         meal_plan_id: mpId,
