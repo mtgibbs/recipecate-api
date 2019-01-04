@@ -64,7 +64,7 @@ const addMealPlanRoute =
 
                 await knex.batchInsert('meal_plan_recipe', rows, 50).transacting(trx);
                 await trx.commit();
-                
+
             } catch (e) {
                 console.error(e);
                 await trx.rollback();
