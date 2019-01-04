@@ -117,10 +117,10 @@ const addRecipePostRoute = {
                         });
                 }
 
-                trx.commit();
+                await trx.commit();
             } catch (e) {
                 console.error(e);
-                trx.rollback();
+                await trx.rollback();
                 throw e;
             }
 

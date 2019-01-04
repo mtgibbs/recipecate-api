@@ -15,9 +15,17 @@ const getMealPlansRoute = {
         }
     },
     handler: async (request, h) => {
-        return await knex('mealplan')
-            .select('id', 'name', 'created_date')
-            .orderBy('created_date', 'desc');
+        const result = await knex('mealplan')
+            .select('id', 'name', 'notes', 'created_at')
+            .orderBy('created_at', 'desc');
+
+        if (!result || result.length === 0) {
+            return [];
+        }
+
+        console.log(result);
+
+        return result;
     }
 };
 
@@ -43,8 +51,7 @@ const addMealPlanRoute =
                     .transacting(trx)
                     .insert({
                         name: mealPlanToAdd.name,
-                        notes: mealPlanToAdd.instructions,
-                        created_date: new Date().getTime()
+                        notes: mealPlanToAdd.instructions
                     })
                     .returning('id'))[0];
 
@@ -56,13 +63,13 @@ const addMealPlanRoute =
                 });
 
                 await knex.batchInsert('meal_plan_recipe', rows, 50).transacting(trx);
-                trx.commit();
+                await trx.commit();
+                
             } catch (e) {
                 console.error(e);
-                trx.rollback();
+                await trx.rollback();
                 throw e;
             }
-
         });
 
         return h.response({ mealPlanId: mpId }).code(200);
@@ -89,7 +96,7 @@ const getMealPlansDetailsRoute = {
         const mpId = parseInt(request.params.id);
 
         const mealPlan = await knex('mealplan')
-            .select('id', 'name', 'created_date', 'notes')
+            .select('id', 'name', 'created_at', 'notes')
             .where({ 'id': mpId })
             .first();
 
@@ -109,7 +116,7 @@ const getMealPlansDetailsRoute = {
         return {
             id: mealPlan.id,
             name: mealPlan.name,
-            createdDate: mealPlan.created_date,
+            createdDate: mealPlan.created_at,
             notes: notes,
             recipes: recipes
         };
