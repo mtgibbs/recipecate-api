@@ -3,7 +3,10 @@ const Joi = require('joi');
 const ingredientsResponseSchema = Joi.array()
     .items(Joi.object({
         id: Joi.number().integer().required(),
-        name: Joi.string().required()
+        recipeId: Joi.number().integer().allow(null),
+        name: Joi.string().required(),
+        unitOfMeasurement: Joi.string().allow(null),
+        amount: Joi.number().allow(null)
     }).label('ingredient'))
     .required()
     .label('ingredients');
