@@ -8,7 +8,7 @@ This is currently an authless REST API that handles recipe stuff for local deplo
 
     - Install MariaDB (or Postgres).
     - Install NodeJS
-    - Update `connection-info.dev.json` to be your database connection info
+    - Update `connection-info.dev.json` to be your database connection info (** WARNING PASSWORD IS OPEN IN PLAIN TEXT **)
     - Update `server.config.json` to reflect the `port` you wish to run the api on as well as set the `host` to `0.0.0.0` if connecting externally.
     - Run `npm run migrate`
     - Run `npm run seed`
