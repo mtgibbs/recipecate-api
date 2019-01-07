@@ -8,10 +8,8 @@ const recipeRoutes = require('./routes/recipe.routes');
 const ingredientRoutes = require('./routes/ingredient.routes');
 const mealPlanRoutes = require('./routes/mealplan.routes');
 
-const server = new Hapi.Server({
-    port: 8080,
-    host: 'localhost'
-});
+const serverConfig = require('./server.config.json');
+const server = new Hapi.Server(serverConfig);
 
 const init = async () => {
 
