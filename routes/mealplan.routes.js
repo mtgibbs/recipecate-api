@@ -65,14 +65,31 @@ const addMealPlanRoute =
                     })
                     .returning('id'))[0];
 
-                const rows = mealPlanToAdd.recipeIds.map(recipeId => {
+                const recipeRows = mealPlanToAdd.recipeIds.map(recipeId => {
                     return {
                         meal_plan_id: mpId,
                         recipe_id: recipeId
                     };
                 });
 
-                await knex.batchInsert('meal_plan_recipe', rows, 50).transacting(trx);
+                await knex.batchInsert('meal_plan_recipe', recipeRows, 50).transacting(trx);
+
+                if (mealPlanToAdd.shoppingList && mealPlanToAdd.shoppingList.length) {
+                    const ingredientRows = mealPlanToAdd.filter(ingredient => {
+                        return ingredient.id;
+                    }).shoppingList.map(ingredient => {
+
+                        return {
+                            meal_plan_id: mpId,
+                            ingredient_id: ingredient.id,
+                            amount: ingredient.amount,
+                            unit_of_measurement: ingredient.unit_of_measurement,
+                        }
+                    });
+
+                    await knex.batchInsert('shopping_list', ingredientRows, 50).transacting(trx);
+                }
+
                 await trx.commit();
 
             } catch (e) {
