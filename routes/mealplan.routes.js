@@ -48,6 +48,11 @@ const addMealPlanRoute =
     handler: async (request, h) => {
         const mealPlanToAdd = request.payload;
 
+        // stop falsey values
+        if (!mealPlanToAdd.notes) {
+            mealPlanToAdd.notes = null;
+        }
+
         let mpId = 0;
         await knex.transaction(async (trx) => {
 
