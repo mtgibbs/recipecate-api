@@ -32,9 +32,14 @@ const addMealPlanRequestSchema = Joi.object({
     shoppingList: Joi.array().items(ingredientRequestSchema).allow(null).label('shoppingList')
 }).label('addMealPlanRequest');
 
+const addMealPlanResponseSchema = Joi.object({
+    mealPlanId: Joi.number().integer().required()
+}).label('addMealPlanResponse')
+
 module.exports = {
     mealPlanResponseSchema: mealPlanResponseSchema,
     mealPlanListResponseSchema: mealPlanListResponseSchema,
     mealPlanDetailsResponseSchema: mealPlanDetailsResponseSchema,
-    addMealPlanRequestSchema: addMealPlanRequestSchema
+    addMealPlanRequestSchema: addMealPlanRequestSchema,
+    addMealPlanResponseSchema: addMealPlanResponseSchema
 };

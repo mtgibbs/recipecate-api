@@ -43,6 +43,9 @@ const addMealPlanRoute =
         tags: ['api', 'mealplan'],
         validate: {
             payload: mealPlanSchemas.addMealPlanRequestSchema
+        },
+        response: {
+            schema: mealPlanSchemas.addMealPlanResponseSchema
         }
     },
     handler: async (request, h) => {
