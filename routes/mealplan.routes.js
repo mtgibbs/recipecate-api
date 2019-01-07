@@ -75,17 +75,25 @@ const addMealPlanRoute =
                 await knex.batchInsert('meal_plan_recipe', recipeRows, 50).transacting(trx);
 
                 if (mealPlanToAdd.shoppingList && mealPlanToAdd.shoppingList.length) {
-                    const ingredientRows = mealPlanToAdd.filter(ingredient => {
-                        return ingredient.id;
-                    }).shoppingList.map(ingredient => {
 
-                        return {
-                            meal_plan_id: mpId,
-                            ingredient_id: ingredient.id,
-                            amount: ingredient.amount,
-                            unit_of_measurement: ingredient.unit_of_measurement,
-                        }
-                    });
+                    // TODO: Handle adding ingredients that don't exist yet?
+                    // const ingredientsToAdd = mealPlanToAdd.shoppingList
+                    //     .filter(ingredient => {
+                    //         return !ingredient.id
+                    //     })
+                    //     .map()
+
+                    const ingredientRows = mealPlanToAdd.shoppingList
+                        .filter(ingredient => { return ingredient.id; })
+                        .map(ingredient => {
+
+                            return {
+                                meal_plan_id: mpId,
+                                ingredient_id: ingredient.id,
+                                amount: ingredient.amount,
+                                unit_of_measurement: ingredient.unit_of_measurement,
+                            }
+                        });
 
                     await knex.batchInsert('shopping_list', ingredientRows, 50).transacting(trx);
                 }
