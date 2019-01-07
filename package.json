@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "api": "node server.js"
   },
