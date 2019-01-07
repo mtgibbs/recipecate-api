@@ -3,7 +3,7 @@ exports.seed = async (knex, Promise) => {
 
   await knex('recipes_ingredients').del();
 
-  await knex('recipes_ingredients').insert([
+  return await knex('recipes_ingredients').insert([
 
     // Hot Cocoa
     { id: 1, recipe_id: 1, ingredient_id: 5, amount: 1, unit_of_measurement: 'cup' },
@@ -23,6 +23,6 @@ exports.seed = async (knex, Promise) => {
 
   ]);
 
-  return await knex.raw('SELECT setval(\'recipes_ingredients_id_seq\', (SELECT MAX(id) from recipes_ingredients));');
+  // return await knex.raw('SELECT setval(\'recipes_ingredients_id_seq\', (SELECT MAX(id) from recipes_ingredients));'); // postgres
 
 };

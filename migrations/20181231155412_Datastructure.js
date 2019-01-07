@@ -16,8 +16,13 @@ exports.up = function (knex, Promise) {
         }),
         knex.schema.createTable('recipes_ingredients', table => {
             table.increments('id').primary();
-            table.integer('recipe_id').references('recipe.id');
-            table.integer('ingredient_id').references('ingredient.id');
+
+            table.integer('recipe_id').unsigned();
+            table.foreign('recipe_id').references('id').inTable('recipe');
+
+            table.integer('ingredient_id').unsigned();
+            table.foreign('ingredient_id').references('id').inTable('ingredient');
+            
             table.float('amount').notNullable();
             table.string('unit_of_measurement', 20).notNullable();
 

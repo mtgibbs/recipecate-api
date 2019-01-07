@@ -1,6 +1,6 @@
 const connectionInfo = require('./connection-info.dev.json');
 
 module.exports = require('knex')({
-    client: 'pg',
+    client: 'mysql',
     connection: connectionInfo
 });

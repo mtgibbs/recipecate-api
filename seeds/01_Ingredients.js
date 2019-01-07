@@ -4,7 +4,7 @@ exports.seed = async (knex, Promise) => {
   await knex('recipes_ingredients').del();
   await knex('ingredient').del();
 
-  await knex('ingredient').insert([
+  return await knex('ingredient').insert([
     { id: 1, name: 'White Onion' },
     { id: 2, name: 'Yellow Onion' },
     { id: 3, name: 'Butter' },
@@ -20,6 +20,6 @@ exports.seed = async (knex, Promise) => {
     { id: 13, name: 'Chocolate Chips' }
   ]);
 
-  return await knex.raw('SELECT setval(\'ingredient_id_seq\', (SELECT MAX(id) from ingredient));');
+  // return await knex.raw('SELECT setval(\'ingredient_id_seq\', (SELECT MAX(id) from ingredient));'); // postgres
 
 };
