@@ -2,6 +2,7 @@
   "name": "recipecate-api",
   "version": "0.0.1",
   "description": "The API for tracking recipes in the Postgres DB",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "migrate": "knex migrate:latest",
