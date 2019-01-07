@@ -1,6 +1,7 @@
 {
     "host": "127.0.0.1",
     "password": "<your password here>",
+    "port": "3306",
     "user": "root",
     "database": "recipecate",
     "charset": "utf8"
