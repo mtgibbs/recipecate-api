@@ -4,7 +4,7 @@ const ingredientResponseSchema = Joi.object({
     id: Joi.number().integer(),
     name: Joi.string(),
     amount: Joi.number(),
-    unit_of_measurement: Joi.string()
+    unitOfMeasurement: Joi.string()
 }).label("recipeIngredientDetail");
 
 const recipeResponseSchema = Joi.object({
@@ -28,7 +28,7 @@ const recipeListResponseSchema = Joi.object({
 const ingredientRequestSchema = Joi.object({
     name: Joi.string().required(),
     amount: Joi.number().required().positive(),
-    unit_of_measurement: Joi.string().lowercase().required()
+    unitOfMeasurement: Joi.string().lowercase().required()
 }).label("ingredientRequest");
 
 const recipeRequestSchema = Joi.object({
