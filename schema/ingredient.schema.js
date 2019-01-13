@@ -3,7 +3,6 @@ const Joi = require('joi');
 const unitOfMeasurement = Joi.string().allow([
     'unit',
     'cup',
-    'c',
     'tsp',
     'tbs',
     'oz',
