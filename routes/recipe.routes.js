@@ -13,7 +13,10 @@ const getRecipeRoute = {
         cors: true
     },
     handler: async (request, h) => {
-        const results = await knex('recipe').select('id', 'name');
+        const results = await knex('recipe')
+            .where('is_deleted', false)
+            .select('id', 'name');
+            
         if (!results || results.length === 0) {
             return {
                 count: 0,

@@ -19,6 +19,7 @@ const getMealPlansRoute = {
         try {
             let result = await knex('meal_plan')
                 .select('id', 'name', 'notes', 'created_at as createdDate')
+                .where('is_deleted', false)
                 .orderBy('id', 'desc');
 
             if (!result || result.length === 0) {
