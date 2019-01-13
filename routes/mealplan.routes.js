@@ -95,7 +95,7 @@ const addMealPlanRoute =
                                 meal_plan_id: mpId,
                                 ingredient_id: ingredient.id,
                                 amount: ingredient.amount,
-                                unit_of_measurement: ingredient.unit_of_measurement,
+                                unit_of_measurement: ingredient.unitOfMeasurement,
                             }
                         });
 
@@ -193,7 +193,7 @@ const getIngredientsForMealPlan = {
                 'ingredient_id as id',
                 'name',
                 'amount',
-                'unit_of_measurement'
+                'unit_of_measurement as unitOfMeasurement'
             ]);
 
         if (!ingredients || ingredients.length === 0) {

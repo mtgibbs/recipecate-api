@@ -15,7 +15,7 @@ const measuredIngredientResponseSchema = Joi.object({
     id: Joi.number().integer().required(),
     name: Joi.string().required(),
     amount: Joi.number(),
-    unit_of_measurement: Joi.string()
+    unitOfMeasurement: Joi.string()
 }).label('measuredIngredient');
 
 const measuredIngredientsListResponseSchema = Joi.array().items(measuredIngredientResponseSchema)

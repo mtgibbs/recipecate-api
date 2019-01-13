@@ -16,7 +16,7 @@ const getRecipeRoute = {
         const results = await knex('recipe')
             .where('is_deleted', false)
             .select('id', 'name');
-            
+
         if (!results || results.length === 0) {
             return {
                 count: 0,
@@ -61,7 +61,7 @@ const getRecipeDetailRoute = {
                         'ingredient_id as id',
                         'name',
                         'amount',
-                        'unit_of_measurement'
+                        'unit_of_measurement as unitOfMeasurement'
                     ]);
                 return recipe;
             });
@@ -114,7 +114,7 @@ const addRecipePostRoute = {
                         .transacting(trx)
                         .insert({
                             amount: ingredient.amount,
-                            unit_of_measurement: ingredient.unit_of_measurement,
+                            unit_of_measurement: ingredient.unitOfMeasurement,
                             recipe_id: recipeId,
                             ingredient_id: ingredient.id
                         });

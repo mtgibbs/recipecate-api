@@ -36,7 +36,7 @@ const getIngredientsRoute = {
                     'recipe_id',
                     'name',
                     'amount',
-                    'unit_of_measurement'
+                    'unit_of_measurement as unitOfMeasurement'
                 ]);
         } else {
             queryResults = await knex('ingredient').select('id', 'name');
@@ -52,7 +52,7 @@ const getIngredientsRoute = {
                 recipeId: ingredient.recipe_id,
                 name: ingredient.name,
                 amount: ingredient.amount,
-                unitOfMeasurement: ingredient.unit_of_measurement
+                unitOfMeasurement: ingredient.unitOfMeasurement
             };
         });
 
