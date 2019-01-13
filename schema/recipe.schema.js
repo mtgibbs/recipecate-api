@@ -1,10 +1,11 @@
 const Joi = require('joi');
+const ingredientSchemas = require('./ingredient.schema');
 
 const ingredientResponseSchema = Joi.object({
     id: Joi.number().integer(),
     name: Joi.string(),
     amount: Joi.number(),
-    unitOfMeasurement: Joi.string()
+    unitOfMeasurement: ingredientSchemas.unitOfMeasurement
 }).label("recipeIngredientDetail");
 
 const recipeResponseSchema = Joi.object({
@@ -28,7 +29,7 @@ const recipeListResponseSchema = Joi.object({
 const ingredientRequestSchema = Joi.object({
     name: Joi.string().required(),
     amount: Joi.number().required().positive(),
-    unitOfMeasurement: Joi.string().lowercase().required()
+    unitOfMeasurement: ingredientSchemas.unitOfMeasurement
 }).label("ingredientRequest");
 
 const recipeRequestSchema = Joi.object({
