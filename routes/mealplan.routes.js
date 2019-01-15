@@ -188,12 +188,13 @@ const getIngredientsForMealPlan = {
         const mpId = parseInt(request.params.id);
         const ingredients = await knex('ingredient')
             .join('shopping_list', { 'ingredient.id': 'shopping_list.ingredient_id' })
+            .join('unit_of_measurement', { 'shopping_list.unit_of_measurement_id': 'unit_of_measurement.id' })
             .where({ 'shopping_list.meal_plan_id': mpId })
             .select([
                 'ingredient_id as id',
-                'name',
-                'amount',
-                'unit_of_measurement as unitOfMeasurement'
+                'ingredient.name',
+                'ingredient.amount',
+                'unit_of_measurement.name as unitOfMeasurement'
             ]);
 
         if (!ingredients || ingredients.length === 0) {

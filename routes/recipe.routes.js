@@ -56,12 +56,13 @@ const getRecipeDetailRoute = {
             .then(async recipe => {
                 recipe.ingredients = await knex('ingredient')
                     .join('recipes_ingredients', { 'ingredient.id': 'recipes_ingredients.ingredient_id' })
+                    .join('unit_of_measurement', { 'recipes_ingredients.unit_of_measurement_id': 'unit_of_measurement.id' })
                     .where({ 'recipes_ingredients.recipe_id': recipeId })
                     .select([
                         'ingredient_id as id',
-                        'name',
-                        'amount',
-                        'unit_of_measurement as unitOfMeasurement'
+                        'ingredient.name',
+                        'ingredient.amount',
+                        'unit_of_measurement.name as unitOfMeasurement'
                     ]);
                 return recipe;
             });
