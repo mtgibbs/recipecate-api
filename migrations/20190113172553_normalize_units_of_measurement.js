@@ -50,8 +50,6 @@ exports.up = async (knex, Promise) => {
         table.dropForeign('ingredient_id');
 
         table.dropIndex([], 'shopping_list_unique');
-
-
     });
 
     if (!await knex.schema.hasColumn('shopping_list', 'unit_of_measurement_id')) {
@@ -84,6 +82,10 @@ exports.down = async (knex, Promise) => {
 
 
     await knex.schema.alterTable('shopping_list', table => {
+        table.dropForeign('meal_plan_id');
+        table.dropForeign('ingredient_id');
+        table.dropForeign('unit_of_measurement_id');
+
         table.dropIndex([], 'shopping_list_unique');
         table.string('unit_of_measurement', 20);
     });
@@ -100,6 +102,9 @@ exports.down = async (knex, Promise) => {
 
     await knex.schema.alterTable('shopping_list', table => {
         table.string('unit_of_measurement').notNullable().alter();
+        table.foreign('meal_plan_id').references('id').inTable('meal_plan');
+        table.foreign('ingredient_id').references('id').inTable('ingredient');
+
         table.unique(['meal_plan_id', 'ingredient_id', 'unit_of_measurement'], 'shopping_list_unique');
         table.dropColumn('unit_of_measurement_id');
     });
@@ -107,7 +112,6 @@ exports.down = async (knex, Promise) => {
 
     await knex.schema.alterTable('recipes_ingredients', table => {
         table.string('unit_of_measurement', 20);
-        table.integer('unit_of_measurement_id').unsigned().references('unit_of_measurement.id');
     });
 
     await knex('recipes_ingredients').where('unit_of_measurement_id', 1).update('unit_of_measurement', 'unit');
@@ -121,6 +125,7 @@ exports.down = async (knex, Promise) => {
     await knex('recipes_ingredients').where('unit_of_measurement_id', 9).update('unit_of_measurement', 'gallon');
 
     await knex.schema.alterTable('recipes_ingredients', table => {
+        table.dropForeign('unit_of_measurement_id');
         table.dropColumn('unit_of_measurement_id');
         table.string('unit_of_measurement').notNullable().alter();
     });
