@@ -88,19 +88,21 @@ const addMealPlanRoute =
                     //     })
                     //     .map()
 
-                    const ingredientRows = mealPlanToAdd.shoppingList
-                        .filter(ingredient => { return ingredient.id; })
-                        .map(ingredient => {
+                    const ingredientRows = await Promise.all(
+                        mealPlanToAdd.shoppingList
+                            .filter(ingredient => { return ingredient.id; })
+                            .map(async (ingredient) => {
 
-                            const unitOfMeasurementId = await uomDomain.getUnitsOfMeasurementByName(ingredient.unitOfMeasurement);
+                                const unitOfMeasurementId = await uomDomain.getUnitsOfMeasurementByName(ingredient.unitOfMeasurement);
 
-                            return {
-                                meal_plan_id: mpId,
-                                ingredient_id: ingredient.id,
-                                amount: ingredient.amount,
-                                unit_of_measurement: unitOfMeasurementId,
-                            }
-                        });
+                                return {
+                                    meal_plan_id: mpId,
+                                    ingredient_id: ingredient.id,
+                                    amount: ingredient.amount,
+                                    unit_of_measurement: unitOfMeasurementId,
+                                }
+                            })
+                    );
 
                     await knex.batchInsert('shopping_list', ingredientRows, 50).transacting(trx);
                 }
