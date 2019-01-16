@@ -23,7 +23,7 @@ const ingredientRequestSchema = Joi.object({
     id: Joi.number().integer(),
     name: Joi.string(),
     amount: Joi.number().required().positive(),
-    unitOfMeasurement: ingredientSchemas.unitOfMeasurement
+    unitOfMeasurement: ingredientSchemas.unitOfMeasurement.required()
 }).label("shoppingListIngredient");
 
 const addMealPlanRequestSchema = Joi.object({

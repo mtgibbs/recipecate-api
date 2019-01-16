@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const unitOfMeasurement = Joi.string().allow([
+const unitOfMeasurement = Joi.string().valid([
     'unit',
     'cup',
     'tsp',
@@ -10,16 +10,16 @@ const unitOfMeasurement = Joi.string().allow([
     'pint',
     'quart',
     'gallon'
-]).required();
+]);
 
-const unitsOfMeasurementResponse = Joi.array().items(unitOfMeasurement);
+const unitsOfMeasurementResponse = Joi.array().items(unitOfMeasurement).label('unitsOfMeasurementList');
 
 const ingredientsResponseSchema = Joi.array()
     .items(Joi.object({
         id: Joi.number().integer().required(),
         recipeId: Joi.number().integer().allow(null),
         name: Joi.string().required(),
-        unitOfMeasurement: Joi.string().allow(null),
+        unitOfMeasurement: unitOfMeasurement.allow(null),
         amount: Joi.number().allow(null)
     }).label('ingredient'))
     .required()
@@ -29,7 +29,7 @@ const measuredIngredientResponseSchema = Joi.object({
     id: Joi.number().integer().required(),
     name: Joi.string().required(),
     amount: Joi.number(),
-    unitOfMeasurement: unitOfMeasurement
+    unitOfMeasurement: unitOfMeasurement.required()
 }).label('measuredIngredient');
 
 const measuredIngredientsListResponseSchema = Joi.array().items(measuredIngredientResponseSchema)
