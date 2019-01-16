@@ -1,4 +1,5 @@
 const ingredientSchemas = require('../schema/ingredient.schema');
+const uomDomain = require('../domain/unit-of-measurement.domain');
 const knex = require('../knex');
 const Joi = require('joi');
 
@@ -61,6 +62,25 @@ const getIngredientsRoute = {
     }
 };
 
+const getUnitsOfMeasurementRoute = {
+    path: '/ingredients/units-of-measurement',
+    method: 'GET',
+    options: {
+        cors: true,
+        tags: ['api', 'ingredients'],
+        response: {
+            schema: ingredientSchemas.unitsOfMeasurementResponse
+        }
+    },
+    handler: async (request, h) => {
+        const unitsOfMeasurement = await uomDomain.getUnitsOfMeasurement();
+        return unitsOfMeasurement.map(uom => {
+            return uom.name;
+        });
+    }
+};
+
 module.exports = [
-    getIngredientsRoute
+    getIngredientsRoute,
+    getUnitsOfMeasurementRoute
 ];

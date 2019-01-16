@@ -12,6 +12,8 @@ const unitOfMeasurement = Joi.string().allow([
     'gallon'
 ]).required();
 
+const unitsOfMeasurementResponse = Joi.array().items(unitOfMeasurement);
+
 const ingredientsResponseSchema = Joi.array()
     .items(Joi.object({
         id: Joi.number().integer().required(),
@@ -37,5 +39,6 @@ module.exports = {
     unitOfMeasurement: unitOfMeasurement,
     ingredientsResponseSchema: ingredientsResponseSchema,
     measuredIngredientResponseSchema: measuredIngredientResponseSchema,
-    measuredIngredientsListResponseSchema: measuredIngredientsListResponseSchema
+    measuredIngredientsListResponseSchema: measuredIngredientsListResponseSchema,
+    unitsOfMeasurementResponse: unitsOfMeasurementResponse
 };
