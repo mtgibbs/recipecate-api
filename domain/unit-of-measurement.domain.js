@@ -17,7 +17,7 @@ const getUnitsOfMeasurementByName = async (name) => {
     return result[0];
 }
 
-modules.export = {
+module.exports = {
     getUnitsOfMeasurement: getUnitsOfMeasurement,
     getUnitsOfMeasurementByName: getUnitsOfMeasurementByName
 };
