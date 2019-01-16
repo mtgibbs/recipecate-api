@@ -1,4 +1,5 @@
 const recipeSchemas = require('../schema/recipe.schema');
+const uomDomain = require('../domain/unit-of-measurement.domain');
 const knex = require('../knex');
 const Joi = require('joi');
 
@@ -111,13 +112,15 @@ const addRecipePostRoute = {
                         ingredient.id = ingredientIdLookup.id;
                     }
 
+                    const unitOfMeasurementId = await uomDomain.getUnitsOfMeasurementByName(ingredient.unitOfMeasurement);
+
                     await knex('recipes_ingredients')
                         .transacting(trx)
                         .insert({
                             amount: ingredient.amount,
-                            unit_of_measurement: ingredient.unitOfMeasurement,
                             recipe_id: recipeId,
-                            ingredient_id: ingredient.id
+                            ingredient_id: ingredient.id,
+                            unit_of_measurement: unitOfMeasurementId,
                         });
                 }
 

@@ -2,6 +2,7 @@
 const mealPlanSchemas = require('../schema/mealplan.schema');
 const ingredientSchemas = require('../schema/ingredient.schema');
 const knex = require('../knex');
+const uomDomain = require('../domain/unit-of-measurement.domain');
 const Joi = require('joi');
 
 const getMealPlansRoute = {
@@ -91,11 +92,13 @@ const addMealPlanRoute =
                         .filter(ingredient => { return ingredient.id; })
                         .map(ingredient => {
 
+                            const unitOfMeasurementId = await uomDomain.getUnitsOfMeasurementByName(ingredient.unitOfMeasurement);
+
                             return {
                                 meal_plan_id: mpId,
                                 ingredient_id: ingredient.id,
                                 amount: ingredient.amount,
-                                unit_of_measurement: ingredient.unitOfMeasurement,
+                                unit_of_measurement: unitOfMeasurementId,
                             }
                         });
 
