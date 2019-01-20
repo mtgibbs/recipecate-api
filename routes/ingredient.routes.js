@@ -34,10 +34,10 @@ const getIngredientsRoute = {
                 .join('unit_of_measurement', { 'recipes_ingredients.unit_of_measurement_id': 'unit_of_measurement.id' })
                 .whereIn('recipes_ingredients.recipe_id', params.recipeId)
                 .select([
-                    'ingredient_id as id',
-                    'ingredient.recipe_id',
+                    'recipes_ingredients.ingredient_id as id',
+                    'recipes_ingredients.recipe_id',
                     'ingredient.name',
-                    'ingredient.amount',
+                    'recipes_ingredients.amount',
                     'unit_of_measurement.name as unitOfMeasurement'
                 ]);
         } else {

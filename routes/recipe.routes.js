@@ -105,6 +105,7 @@ const addRecipePostRoute = {
                     .returning('id'))[0];
 
                 for (const ingredient of recipeToAdd.ingredients) {
+
                     const ingredientIdLookup = await knex('ingredient').where({ name: ingredient.name }).select('id').first();
                     if (!ingredientIdLookup) {
                         ingredient.id = (await knex('ingredient').transacting(trx).insert({ name: ingredient.name.trim() }).returning('id'))[0];
@@ -112,16 +113,19 @@ const addRecipePostRoute = {
                         ingredient.id = ingredientIdLookup.id;
                     }
 
-                    const unitOfMeasurementId = await uomDomain.getUnitsOfMeasurementByName(ingredient.unitOfMeasurement);
+                    const unitOfMeasurement = await uomDomain.getUnitsOfMeasurementByName(ingredient.unitOfMeasurement);
 
-                    await knex('recipes_ingredients')
-                        .transacting(trx)
-                        .insert({
-                            amount: ingredient.amount,
-                            recipe_id: recipeId,
-                            ingredient_id: ingredient.id,
-                            unit_of_measurement: unitOfMeasurementId,
-                        });
+                    if (unitOfMeasurement) {
+                        await knex('recipes_ingredients')
+                            .transacting(trx)
+                            .insert({
+                                amount: ingredient.amount,
+                                recipe_id: recipeId,
+                                ingredient_id: ingredient.id,
+                                unit_of_measurement_id: unitOfMeasurement.id,
+                            });
+                    }
+
                 }
 
                 await trx.commit();

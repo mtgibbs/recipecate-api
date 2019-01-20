@@ -93,13 +93,13 @@ const addMealPlanRoute =
                             .filter(ingredient => { return ingredient.id; })
                             .map(async (ingredient) => {
 
-                                const unitOfMeasurementId = await uomDomain.getUnitsOfMeasurementByName(ingredient.unitOfMeasurement);
+                                const unitOfMeasurement = await uomDomain.getUnitsOfMeasurementByName(ingredient.unitOfMeasurement);
 
                                 return {
                                     meal_plan_id: mpId,
                                     ingredient_id: ingredient.id,
                                     amount: ingredient.amount,
-                                    unit_of_measurement: unitOfMeasurementId,
+                                    unit_of_measurement_id: unitOfMeasurement.id,
                                 }
                             })
                     );
