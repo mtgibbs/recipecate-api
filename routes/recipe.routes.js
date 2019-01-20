@@ -62,7 +62,7 @@ const getRecipeDetailRoute = {
                     .select([
                         'ingredient_id as id',
                         'ingredient.name',
-                        'ingredient.amount',
+                        'recipes_ingredients.amount',
                         'unit_of_measurement.name as unitOfMeasurement'
                     ]);
                 return recipe;

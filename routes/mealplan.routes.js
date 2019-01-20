@@ -198,7 +198,7 @@ const getIngredientsForMealPlan = {
             .select([
                 'ingredient_id as id',
                 'ingredient.name',
-                'ingredient.amount',
+                'shopping_list.amount',
                 'unit_of_measurement.name as unitOfMeasurement'
             ]);
 
