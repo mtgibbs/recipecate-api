@@ -65,8 +65,8 @@ const addMealPlanRoute =
                 mpId = (await knex('meal_plan')
                     .transacting(trx)
                     .insert({
-                        name: mealPlanToAdd.name,
-                        notes: mealPlanToAdd.notes
+                        name: mealPlanToAdd.name.trim(),
+                        notes: mealPlanToAdd.notes ? mealPlanToAdd.notes.trim() : null
                     })
                     .returning('id'))[0];
 

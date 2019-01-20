@@ -6,6 +6,13 @@ const getUnitsOfMeasurement = async () => {
 };
 
 const getUnitsOfMeasurementByName = async (name) => {
+
+    if (!name) {
+        return null;
+    }
+
+    name = name.trim();
+
     const result = await knex('unit_of_measurement')
         .select('id', 'name')
         .where({ name: name });

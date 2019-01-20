@@ -101,13 +101,13 @@ const addRecipePostRoute = {
             try {
                 recipeId = (await knex('recipe')
                     .transacting(trx)
-                    .insert({ name: recipeToAdd.name, instructions: recipeToAdd.instructions })
+                    .insert({ name: recipeToAdd.name.trim(), instructions: recipeToAdd.instructions.trim() })
                     .returning('id'))[0];
 
                 for (const ingredient of recipeToAdd.ingredients) {
                     const ingredientIdLookup = await knex('ingredient').where({ name: ingredient.name }).select('id').first();
                     if (!ingredientIdLookup) {
-                        ingredient.id = (await knex('ingredient').transacting(trx).insert({ name: ingredient.name }).returning('id'))[0];
+                        ingredient.id = (await knex('ingredient').transacting(trx).insert({ name: ingredient.name.trim() }).returning('id'))[0];
                     } else {
                         ingredient.id = ingredientIdLookup.id;
                     }
