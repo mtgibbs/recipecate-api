@@ -67,6 +67,31 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/ingredients": {
+			"get": {
+				"operationId": "GetAllIngredients",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ingredients"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/recipes": {
 			"get": {
 				"operationId": "GetAllRecipes",
