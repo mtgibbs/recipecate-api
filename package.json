@@ -8,7 +8,8 @@
     "tsc": "npx tsc",
     "server": "node dist/server.js",
     "start": "npx tsc && node dist/server.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "tsoa": "npx tsoa spec-and-routes && npx tsc"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +20,8 @@
     "express": "^4.18.2",
     "mongoose": "^8.0.3",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "tsoa": "^5.1.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.5",

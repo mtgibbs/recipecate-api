@@ -33,5 +33,5 @@ const RecipeSchema: Schema = new Schema({
     is_deleted: { type: Boolean, default: false, required: false }
 });
 
-const Recipe = mongoose.model<IRecipe>('Recipe', RecipeSchema);
-export default Recipe;
+const RecipeStore = mongoose.model<IRecipe>('Recipe', RecipeSchema);
+export default RecipeStore;

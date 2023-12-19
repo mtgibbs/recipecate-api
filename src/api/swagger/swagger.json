@@ -1,0 +1,101 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"Ingredient": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"quantity": {
+						"type": "number",
+						"format": "double"
+					},
+					"unit": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"quantity",
+					"unit"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Recipe": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"ingredients": {
+						"items": {
+							"$ref": "#/components/schemas/Ingredient"
+						},
+						"type": "array"
+					},
+					"instructions": {
+						"type": "string"
+					},
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"ingredients",
+					"instructions",
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "recipecate-api",
+		"version": "2.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/recipes": {
+			"get": {
+				"operationId": "GetAllRecipes",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Recipe"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Recipes"
+				],
+				"security": [],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
