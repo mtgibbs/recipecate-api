@@ -1,5 +1,5 @@
 import { Recipe } from '../model/recipe';
-import RecipeStore from '../schema/recipe';
+import RecipeStore from '../schema/recipe.schema';
 
 export class RecipeService {
 

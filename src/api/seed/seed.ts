@@ -1,4 +1,4 @@
-import Recipe from '../schema/recipe';
+import Recipe from '../schema/recipe.schema';
 import seedRecipes from './recipe.seed';
 
 const runSeed = async () => {
