@@ -118,6 +118,31 @@
 				"security": [],
 				"parameters": []
 			}
+		},
+		"/unit-of-measure": {
+			"get": {
+				"operationId": "GetAllUnitOfMeasures",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Unit of Measure"
+				],
+				"security": [],
+				"parameters": []
+			}
 		}
 	},
 	"servers": [

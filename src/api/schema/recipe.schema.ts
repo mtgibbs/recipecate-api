@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { Ingredient } from '../model/ingredient';
+import { UNITS_OF_MEASUREMENT } from '../enum/unit-of-measurement';
 
 interface IRecipe extends Document {
     name: string;
@@ -14,18 +15,7 @@ const RecipeSchema: Schema = new Schema({
             name: { type: String, required: true },
             quantity: { type: Number, required: true },
             unit: {
-                type: String, required: true, enum: [
-                    'unit',
-                    'cup',
-                    'tsp',
-                    'tbs',
-                    'oz',
-                    'lb',
-                    'pint',
-                    'quart',
-                    'gallon',
-                    'g'
-                ]
+                type: String, required: true, enum: UNITS_OF_MEASUREMENT
             }
         }
     ],
