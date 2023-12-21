@@ -1,13 +1,18 @@
-import { Get, Post, Put, Delete, Route, Tags } from 'tsoa';
+import { Get, Post, Put, Delete, Route, Tags, Query, Controller, Response, Body } from 'tsoa';
 import { RecipeService } from '../services/recipe.service';
 import { Recipe } from '../model/recipe';
+import { Ingredient } from '../model/ingredient';
+import { ApiError } from '../../error/api-error';
+import { NotFoundError } from '../../error/404-not-found-error';
+
 
 @Route('recipes')
 @Tags('Recipes')
-export class RecipeController {
+export class RecipeController extends Controller {
     private recipeService: RecipeService;
 
     constructor() {
+        super();
         this.recipeService = new RecipeService();
     }
 
@@ -16,23 +21,40 @@ export class RecipeController {
         return this.recipeService.getAll();
     }
 
-    // @Get('/:id')
-    // public async getRecipeById(id: number): Promise<Recipe> {
-    //     return this.recipeService.getRecipeById(id);
-    // }
+    @Get('/shopping-list')
+    public async getShoppingListByIds(@Query() ids: string[]): Promise<Ingredient[]> {
+        return this.recipeService.getShoppingList(ids);
+    }
 
-    // @Post('/')
-    // public async createRecipe(recipe: Recipe): Promise<Recipe> {
-    //     return this.recipeService.createRecipe(recipe);
-    // }
+    @Response<NotFoundError>('404', 'Not Found')
+    @Get('/:id')
+    public async getRecipeById(id: string): Promise<Recipe> {
+        const recipe = await this.recipeService.getRecipeById(id);
 
-    // @Put('/:id')
-    // public async updateRecipe(id: number, recipe: Recipe): Promise<Recipe> {
-    //     return this.recipeService.updateRecipe(id, recipe);
-    // }
+        if (!recipe) {
+            throw new ApiError('RecipeNotFound', 404, 'Recipe not found');
+        }
+        return recipe;
 
-    // @Delete('/:id')
-    // public async deleteRecipe(id: number): Promise<void> {
-    //     return this.recipeService.deleteRecipe(id);
-    // }
+    }
+
+    @Post('/')
+    public async createRecipe(@Body() recipe: Recipe): Promise<Recipe> {
+        return this.recipeService.create(recipe);
+    }
+
+    @Response<NotFoundError>('404', 'Not Found')
+    @Put('/:id')
+    public async updateRecipe(id: string, @Body() recipe: Recipe): Promise<Recipe> {
+        const updatedRecipe = this.recipeService.update(id, recipe);
+        if (!updatedRecipe) {
+            throw new ApiError('RecipeNotFound', 404, 'Recipe not found');
+        }
+        return recipe;
+    }
+
+    @Delete('/:id')
+    public async deleteRecipe(id: string): Promise<void> {
+        return this.recipeService.deleteRecipeById(id);
+    }
 }

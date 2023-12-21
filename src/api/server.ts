@@ -8,6 +8,14 @@ import { RegisterRoutes } from './routes';
 import * as swaggerJson from './swagger/swagger.json';
 import * as swaggerUI from 'swagger-ui-express';
 
+import {
+    Response as ExResponse,
+    Request as ExRequest,
+    NextFunction,
+} from "express";
+import { ValidateError } from "tsoa";
+import { ApiError } from '../error/api-error';
+
 const app = express();
 dotenv.config();
 
@@ -22,8 +30,21 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING!)
         app.use(cors());
         app.use(bodyParser.json());
 
-        RegisterRoutes(app); 
+        RegisterRoutes(app);
         app.use(['/openapi', '/docs', '/swagger'], swaggerUI.serve, swaggerUI.setup(swaggerJson));
+
+        app.use(function errorHandler(
+            err: unknown,
+            req: ExRequest,
+            res: ExResponse,
+            next: NextFunction
+        ): ExResponse | void {
+            if (err instanceof ApiError) {
+                console.warn(`Caught ApiError for ${req.path}:`, err);
+                return res.status(err.statusCode).json(err);
+            }
+            next();
+        });
 
         app.listen(port, () => {
             console.log(`Server is running on port ${port}`);
