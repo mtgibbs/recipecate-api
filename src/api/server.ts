@@ -13,7 +13,6 @@ import {
     Request as ExRequest,
     NextFunction,
 } from "express";
-import { ValidateError } from "tsoa";
 import { ApiError } from '../error/api-error';
 
 const app = express();
