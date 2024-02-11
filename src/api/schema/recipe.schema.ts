@@ -16,7 +16,8 @@ const RecipeSchema: Schema = new Schema({
             quantity: { type: Number, required: true },
             unit: {
                 type: String, required: true, enum: UNITS_OF_MEASUREMENT
-            }
+            },
+            is_optional: { type: Boolean, default: false, required: false }
         }
     ],
     instructions: { type: String, required: true },

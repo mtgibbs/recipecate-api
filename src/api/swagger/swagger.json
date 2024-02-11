@@ -17,6 +17,9 @@
 					},
 					"unit": {
 						"type": "string"
+					},
+					"is_optional": {
+						"type": "boolean"
 					}
 				},
 				"required": [
