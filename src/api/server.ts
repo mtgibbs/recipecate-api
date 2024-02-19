@@ -14,6 +14,7 @@ import {
     NextFunction,
 } from "express";
 import { ApiError } from '../error/api-error';
+import path from 'path';
 
 const app = express();
 dotenv.config();
@@ -31,6 +32,10 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING!)
 
         RegisterRoutes(app);
         app.use(['/openapi', '/docs', '/swagger'], swaggerUI.serve, swaggerUI.setup(swaggerJson));
+
+        app.get('swagger.json', (req, res) => {
+            res.sendFile(path.join(__dirname, 'swagger', 'swagger.json'));
+        });
 
         app.use(function errorHandler(
             err: unknown,
