@@ -6,9 +6,9 @@ export interface RecipeRequest {
     name: string,
     ingredients: Ingredient[],
     instructions: string,
-    cookType: CookType,
-    totalTimeMinutes: number,
-    recipeCenterpieceType: RecipeCenterpieceType,
+    cookType?: CookType,
+    totalTimeMinutes?: number,
+    recipeCenterpieceType?: RecipeCenterpieceType,
 }
 
 export interface Recipe extends RecipeRequest {

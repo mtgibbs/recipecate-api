@@ -24,12 +24,25 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CookType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["pressure-cooker"]},{"dataType":"enum","enums":["stovetop"]},{"dataType":"enum","enums":["oven"]},{"dataType":"enum","enums":["slow-cooker"]},{"dataType":"enum","enums":["grill"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "RecipeCenterpieceType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["pork"]},{"dataType":"enum","enums":["beef"]},{"dataType":"enum","enums":["chicken"]},{"dataType":"enum","enums":["vegetarian"]},{"dataType":"enum","enums":["fish"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Recipe": {
         "dataType": "refObject",
         "properties": {
             "name": {"dataType":"string","required":true},
             "ingredients": {"dataType":"array","array":{"dataType":"refObject","ref":"Ingredient"},"required":true},
             "instructions": {"dataType":"string","required":true},
+            "cookType": {"ref":"CookType"},
+            "totalTimeMinutes": {"dataType":"double"},
+            "recipeCenterpieceType": {"ref":"RecipeCenterpieceType"},
             "id": {"dataType":"string","required":true},
         },
         "additionalProperties": false,

@@ -30,6 +30,26 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"CookType": {
+				"type": "string",
+				"enum": [
+					"pressure-cooker",
+					"stovetop",
+					"oven",
+					"slow-cooker",
+					"grill"
+				]
+			},
+			"RecipeCenterpieceType": {
+				"type": "string",
+				"enum": [
+					"pork",
+					"beef",
+					"chicken",
+					"vegetarian",
+					"fish"
+				]
+			},
 			"Recipe": {
 				"properties": {
 					"name": {
@@ -43,6 +63,16 @@
 					},
 					"instructions": {
 						"type": "string"
+					},
+					"cookType": {
+						"$ref": "#/components/schemas/CookType"
+					},
+					"totalTimeMinutes": {
+						"type": "number",
+						"format": "double"
+					},
+					"recipeCenterpieceType": {
+						"$ref": "#/components/schemas/RecipeCenterpieceType"
 					},
 					"id": {
 						"type": "string"

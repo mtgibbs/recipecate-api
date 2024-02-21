@@ -12,7 +12,10 @@ export class RecipeService {
             id: recipe._id,
             name: recipe.name,
             ingredients: recipe.ingredients,
-            instructions: recipe.instructions
+            instructions: recipe.instructions,
+            cookType: recipe.cookType,
+            totalTimeMinutes: recipe.totalTimeMinutes,
+            recipeCenterpieceType: recipe.recipeCenterpieceType
         }));
     }
 
@@ -25,7 +28,10 @@ export class RecipeService {
                 id: recipe._id,
                 name: recipe.name,
                 ingredients: recipe.ingredients,
-                instructions: recipe.instructions
+                instructions: recipe.instructions,
+                cookType: recipe.cookType,
+                totalTimeMinutes: recipe.totalTimeMinutes,
+                recipeCenterpieceType: recipe.recipeCenterpieceType
             };
         }
 
@@ -49,7 +55,10 @@ export class RecipeService {
             id: savedRecipe._id,
             name: savedRecipe.name,
             ingredients: savedRecipe.ingredients,
-            instructions: savedRecipe.instructions
+            instructions: savedRecipe.instructions,
+            cookType: savedRecipe.cookType,
+            totalTimeMinutes: savedRecipe.totalTimeMinutes,
+            recipeCenterpieceType: savedRecipe.recipeCenterpieceType
         };
     }
 
@@ -66,7 +75,10 @@ export class RecipeService {
                 id: updatedRecipe._id,
                 name: updatedRecipe.name,
                 ingredients: updatedRecipe.ingredients,
-                instructions: updatedRecipe.instructions
+                instructions: updatedRecipe.instructions,
+                cookType: updatedRecipe.cookType,
+                totalTimeMinutes: updatedRecipe.totalTimeMinutes,
+                recipeCenterpieceType: updatedRecipe.recipeCenterpieceType
             };
         }
 
