@@ -3,10 +3,11 @@ import { Recipe } from '../model/recipe';
 import RecipeStore from '../schema/recipe.schema';
 import { Ingredient } from '../model/ingredient';
 import { RecipeSearchParameters } from '../model/recipe-search-parameters';
+import { RecipesResponse } from '../model/recipes-response';
 
 export class RecipeService {
 
-    public async getRecipes(searchParameters: RecipeSearchParameters): Promise<Recipe[]> {
+    public async getRecipes(searchParameters: RecipeSearchParameters): Promise<RecipesResponse> {
 
         const { textSearch, cookType, recipeCenterpieceType } = searchParameters;
         const query: any = {};
@@ -29,19 +30,24 @@ export class RecipeService {
         const page = searchParameters.page || 1;
         const pageSize = searchParameters.pageSize || 10;
 
+        const totalCount = await RecipeStore.countDocuments(query);
+
         const recipes = await RecipeStore.find(query)
             .skip((page - 1) * pageSize)
             .limit(pageSize);
 
-        return recipes.map((recipe) => ({
-            id: recipe._id,
-            name: recipe.name,
-            ingredients: recipe.ingredients,
-            instructions: recipe.instructions,
-            cookType: recipe.cookType,
-            totalTimeMinutes: recipe.totalTimeMinutes,
-            recipeCenterpieceType: recipe.recipeCenterpieceType
-        }));
+        return {
+            totalCount,
+            recipes: recipes.map((recipe) => ({
+                id: recipe._id,
+                name: recipe.name,
+                ingredients: recipe.ingredients,
+                instructions: recipe.instructions,
+                cookType: recipe.cookType,
+                totalTimeMinutes: recipe.totalTimeMinutes,
+                recipeCenterpieceType: recipe.recipeCenterpieceType
+            }))
+        };
     }
 
     public async getAll(): Promise<Recipe[]> {

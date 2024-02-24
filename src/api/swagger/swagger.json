@@ -88,6 +88,26 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"RecipesResponse": {
+				"properties": {
+					"totalCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"recipes": {
+						"items": {
+							"$ref": "#/components/schemas/Recipe"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"totalCount",
+					"recipes"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"NotFoundError": {
 				"properties": {
 					"name": {
@@ -156,10 +176,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Recipe"
-									},
-									"type": "array"
+									"$ref": "#/components/schemas/RecipesResponse"
 								}
 							}
 						}
