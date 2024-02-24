@@ -31,7 +31,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "RecipeCenterpieceType": {
         "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["pork"]},{"dataType":"enum","enums":["beef"]},{"dataType":"enum","enums":["chicken"]},{"dataType":"enum","enums":["vegetarian"]},{"dataType":"enum","enums":["fish"]}],"validators":{}},
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["pork"]},{"dataType":"enum","enums":["beef"]},{"dataType":"enum","enums":["poultry"]},{"dataType":"enum","enums":["vegetarian"]},{"dataType":"enum","enums":["fish"]},{"dataType":"enum","enums":["dessert"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Recipe": {
@@ -94,10 +94,15 @@ export function RegisterRoutes(app: Router) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/recipes',
             ...(fetchMiddlewares<RequestHandler>(RecipeController)),
-            ...(fetchMiddlewares<RequestHandler>(RecipeController.prototype.getAllRecipes)),
+            ...(fetchMiddlewares<RequestHandler>(RecipeController.prototype.getRecipes)),
 
-            function RecipeController_getAllRecipes(request: any, response: any, next: any) {
+            function RecipeController_getRecipes(request: any, response: any, next: any) {
             const args = {
+                    textSearch: {"in":"query","name":"textSearch","dataType":"string"},
+                    cookType: {"in":"query","name":"cookType","ref":"CookType"},
+                    recipeCenterpieceType: {"in":"query","name":"recipeCenterpieceType","ref":"RecipeCenterpieceType"},
+                    page: {"in":"query","name":"page","dataType":"double"},
+                    pageSize: {"in":"query","name":"pageSize","dataType":"double"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -109,7 +114,7 @@ export function RegisterRoutes(app: Router) {
                 const controller = new RecipeController();
 
 
-              const promise = controller.getAllRecipes.apply(controller, validatedArgs as any);
+              const promise = controller.getRecipes.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

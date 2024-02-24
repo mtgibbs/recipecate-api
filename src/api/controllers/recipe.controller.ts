@@ -4,6 +4,9 @@ import { Recipe } from '../model/recipe';
 import { Ingredient } from '../model/ingredient';
 import { ApiError } from '../../error/api-error';
 import { NotFoundError } from '../../error/404-not-found-error';
+import { RecipeSearchParameters } from '../model/recipe-search-parameters';
+import { CookType } from '../enum/recipe-cook-type';
+import { RecipeCenterpieceType } from '../enum/recipe-centerpiece-type';
 
 
 @Route('recipes')
@@ -17,8 +20,14 @@ export class RecipeController extends Controller {
     }
 
     @Get('/')
-    public async getAllRecipes(): Promise<Recipe[]> {
-        return this.recipeService.getAll();
+    public async getRecipes(
+        @Query() textSearch?: string,
+        @Query() cookType?: CookType,
+        @Query() recipeCenterpieceType?: RecipeCenterpieceType,
+        @Query() page?: number,
+        @Query() pageSize?: number
+    ): Promise<Recipe[]> {
+        return this.recipeService.getRecipes({ textSearch, cookType, recipeCenterpieceType, page, pageSize });
     }
 
     @Get('/shopping-list')

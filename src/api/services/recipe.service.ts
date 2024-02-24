@@ -2,8 +2,47 @@ import mongoose from 'mongoose';
 import { Recipe } from '../model/recipe';
 import RecipeStore from '../schema/recipe.schema';
 import { Ingredient } from '../model/ingredient';
+import { RecipeSearchParameters } from '../model/recipe-search-parameters';
 
 export class RecipeService {
+
+    public async getRecipes(searchParameters: RecipeSearchParameters): Promise<Recipe[]> {
+
+        const { textSearch, cookType, recipeCenterpieceType } = searchParameters;
+        const query: any = {};
+
+        if (textSearch) {
+            query.$or = [
+                { name: { $regex: textSearch, $options: 'i' } },
+                { 'ingredients.name': { $regex: textSearch, $options: 'i' } }
+            ];
+        }
+
+        if (cookType) {
+            query.cookType = cookType;
+        }
+
+        if (recipeCenterpieceType) {
+            query.recipeCenterpieceType = recipeCenterpieceType;
+        }
+
+        const page = searchParameters.page || 1;
+        const pageSize = searchParameters.pageSize || 10;
+
+        const recipes = await RecipeStore.find(query)
+            .skip((page - 1) * pageSize)
+            .limit(pageSize);
+
+        return recipes.map((recipe) => ({
+            id: recipe._id,
+            name: recipe.name,
+            ingredients: recipe.ingredients,
+            instructions: recipe.instructions,
+            cookType: recipe.cookType,
+            totalTimeMinutes: recipe.totalTimeMinutes,
+            recipeCenterpieceType: recipe.recipeCenterpieceType
+        }));
+    }
 
     public async getAll(): Promise<Recipe[]> {
         const recipes = await RecipeStore.find({});

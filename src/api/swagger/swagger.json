@@ -45,9 +45,10 @@
 				"enum": [
 					"pork",
 					"beef",
-					"chicken",
+					"poultry",
 					"vegetarian",
-					"fish"
+					"fish",
+					"dessert"
 				]
 			},
 			"Recipe": {
@@ -148,7 +149,7 @@
 		},
 		"/recipes": {
 			"get": {
-				"operationId": "GetAllRecipes",
+				"operationId": "GetRecipes",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -168,7 +169,50 @@
 					"Recipes"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "textSearch",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "cookType",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/CookType"
+						}
+					},
+					{
+						"in": "query",
+						"name": "recipeCenterpieceType",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/RecipeCenterpieceType"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			},
 			"post": {
 				"operationId": "CreateRecipe",
