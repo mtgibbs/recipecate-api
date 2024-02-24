@@ -1,11 +1,11 @@
 const RECIPE_CENTERPIECE_TYPE = [
     'pork',
     'beef',
-    'chicken',
+    'poultry',
     'vegetarian',
-    'fish'
+    'fish',
+    'dessert',
 ] as const;
 
 type RecipeCenterpieceType = typeof RECIPE_CENTERPIECE_TYPE[number];
-
 export { RECIPE_CENTERPIECE_TYPE, RecipeCenterpieceType };

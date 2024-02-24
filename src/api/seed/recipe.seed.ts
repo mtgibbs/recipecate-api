@@ -4,6 +4,8 @@ const seedRecipes: readonly RecipeRequest[] = [
     {
         name: 'Hot Cocoa',
         instructions: 'TODO FILL THESE IN',
+        recipeCenterpieceType: 'dessert',
+        cookType: 'stovetop',
         ingredients: [
             { name: 'Cocoa Powder', quantity: 1.00, unit: 'cup' },
             { name: 'Sugar', quantity: 1.50, unit: 'cup' },
@@ -13,6 +15,8 @@ const seedRecipes: readonly RecipeRequest[] = [
     {
         name: 'Chocolate Chip Cookies',
         instructions: 'TODO FILL THESE IN',
+        recipeCenterpieceType: 'dessert',
+        cookType: 'oven',
         ingredients: [
             { name: 'Butter', quantity: 0.50, unit: 'cup' },
             { name: 'Brown Sugar', quantity: 0.50, unit: 'cup' },
@@ -32,6 +36,8 @@ const seedRecipes: readonly RecipeRequest[] = [
             '3. Cut avocado into chunks\n' +
             '4. Combine corn, bacon, cheese, cilantro in a bowl.  \n' +
             '5. Add lime juice, salt, and pepper to taste',
+        recipeCenterpieceType: 'pork',
+        cookType: 'stovetop',
         ingredients: [
             { name: 'Bacon', quantity: 5.00, unit: 'unit' },
             { name: 'Corn', quantity: 2.00, unit: 'cup' },
@@ -51,6 +57,8 @@ const seedRecipes: readonly RecipeRequest[] = [
             '6. Combine orzo mixture, marsala mixture, cream, chicken, fontina (shredded), mozzarella(shredded or diced), peas, salt and pepper.  Stir and pour into baking dish.\n' +
             '7. Combine breadcrumbs, parmesan, and dried thyme.  Sprinkle on top of pasta.\n' +
             '8. Bake 25 minutes.',
+        recipeCenterpieceType: 'poultry',
+        cookType: 'oven',
         ingredients: [
             { name: 'Chicken Broth', quantity: 4.00, unit: 'cup' },
             { name: 'Orzo Pasta', quantity: 1.00, unit: 'lb' },
@@ -75,6 +83,8 @@ const seedRecipes: readonly RecipeRequest[] = [
         instructions: '1. Cook ground meat in skillet\n' +
             '2. Add seasoning\n' +
             '3. Combine meat and toppings in taco shell',
+        recipeCenterpieceType: 'beef',
+        cookType: 'stovetop',
         ingredients: [
             { name: 'Ground Beef', quantity: 1.00, unit: 'lb' },
             { name: 'Tortillas ', quantity: 1.00, unit: 'unit' },
@@ -90,6 +100,8 @@ const seedRecipes: readonly RecipeRequest[] = [
         instructions: '1. Turn your electric pressure cooker to the saute function on high and saute the diced onions in the butter, then add garlic\n' +
             '2. Add the remaining ingredients to the pot. Cook on high pressure for 15 minutes. \n' +
             '3. Remove the chicken breasts from the pot and shred and lemon juice',
+        recipeCenterpieceType: 'poultry',
+        cookType: 'pressure-cooker',
         ingredients: [
             { name: 'Butter', quantity: 2.00, unit: 'tbs' },
             { name: 'Onion', quantity: 1.00, unit: 'unit' },
@@ -109,6 +121,8 @@ const seedRecipes: readonly RecipeRequest[] = [
             '2. Brown meat in skillet, drain excess fat\n' +
             '3. Add spaghetti sauce\n' +
             '4. Drain noodles and combine all ingredients',
+        recipeCenterpieceType: 'beef',
+        cookType: 'stovetop',
         ingredients: [
             { name: 'Spaghetti Sauce', quantity: 1.00, unit: 'unit' },
             { name: 'Ground Beef', quantity: 1.00, unit: 'lb' },
@@ -122,6 +136,8 @@ const seedRecipes: readonly RecipeRequest[] = [
             '2. Submerge in water, set sous vide to 155 degrees F\n' +
             '3. Cook for 50 minutes to 2 hours\n' +
             '4. remove from bag and cook in skillet with butter for 1 minute on each side',
+        recipeCenterpieceType: 'poultry',
+        cookType: 'stovetop',
         ingredients: [
             { name: 'Chicken', quantity: 1.00, unit: 'lb' },
             { name: 'Frozen Vegetables', quantity: 1.00, unit: 'unit' },
@@ -136,6 +152,8 @@ const seedRecipes: readonly RecipeRequest[] = [
             '3. Add tomatoes, chicken broth, salt and pepper then simmer for 15 min\n' +
             '4. Add drained beans and cook 5 min\n' +
             '5. Serve with sour cream, cheese, and lime wedges',
+        recipeCenterpieceType: 'poultry',
+        cookType: 'stovetop',
         ingredients: [
             { name: 'Olive Oil', quantity: 1.00, unit: 'tbs' },
             { name: 'Ground Turkey', quantity: 1.00, unit: 'lb' },
@@ -159,6 +177,8 @@ const seedRecipes: readonly RecipeRequest[] = [
     {
         name: 'Costco Pesto Salmon',
         instructions: '1. Heat oven to 375 degrees F\n2. Cook until salmon reaches 145 degrees F',
+        recipeCenterpieceType: 'fish',
+        cookType: 'oven',
         ingredients: [
             { name: 'Costco Pesto Salmon', quantity: 1.00, unit: 'unit' },
             { name: 'Frozen Vegetables', quantity: 1.00, unit: 'unit' }
@@ -169,6 +189,7 @@ const seedRecipes: readonly RecipeRequest[] = [
         instructions: '1. Preheat waffle maker and spray with cooking spray\n' +
             '2. Combine all ingredients in large bowl\n' +
             '3. Cook in batches, 1/3 c mixture per waffle',
+        recipeCenterpieceType: 'dessert',
         ingredients: [
             { name: 'Coffee', quantity: 0.50, unit: 'cup' },
             { name: 'Bisquick', quantity: 2.00, unit: 'cup' },
@@ -184,6 +205,8 @@ const seedRecipes: readonly RecipeRequest[] = [
         instructions: '1. Create marinate by combining oil, garlic, vinegar, soy sauce, honey, and pepper in a bag\n' +
             '2. Poke steak with fork and add steak to bag, leave for at least 4 hours\n' +
             '3. Grill steak until medium',
+        recipeCenterpieceType: 'beef',
+        cookType: 'grill',
         ingredients: [
             { name: 'Flank Steak', quantity: 2.00, unit: 'lb' },
             { name: 'Olive Oil', quantity: 0.30, unit: 'cup' },
@@ -202,6 +225,8 @@ const seedRecipes: readonly RecipeRequest[] = [
             '3. Form into balls and cook for 20 min in 400 degree oven\n' +
             '4. In saucepan cook remaining butter, flour, broth, 1 tsp worcestershire, and heavy cream to make gravy\n' +
             '5. Add cooked meatballs to gravy to coat, top with chopped parsley and salt and pepper to taste',
+        recipeCenterpieceType: 'pork',
+        cookType: 'oven',
         ingredients: [
             { name: 'Bread Crumbs', quantity: 1.00, unit: 'cup' },
             { name: 'Butter', quantity: 4.00, unit: 'tbs' },
@@ -227,6 +252,8 @@ const seedRecipes: readonly RecipeRequest[] = [
             '2. Boil in salted water until fork tender\n' +
             '3. Drain and mash with butter and milk\n' +
             '4. Spices (salt, pepper, garlic) to taste',
+        recipeCenterpieceType: 'vegetarian',
+        cookType: 'stovetop',
         ingredients: [
             { name: 'Russet Potatoes', quantity: 4.00, unit: 'unit' },
             { name: 'Butter', quantity: 4.00, unit: 'tbs' },
@@ -241,6 +268,8 @@ const seedRecipes: readonly RecipeRequest[] = [
             '4. Cut biscuits into small pieces\n' +
             '5. Mix in vegetables and dough pieces into crock-pot and cook 1 hour\n' +
             '6. Shred chicken and remix',
+        recipeCenterpieceType: 'poultry',
+        cookType: 'slow-cooker',
         ingredients: [
             { name: 'Onion', quantity: 1.00, unit: 'unit' },
             { name: 'Cream of Celery Soup', quantity: 1.00, unit: 'unit' },
@@ -262,6 +291,8 @@ const seedRecipes: readonly RecipeRequest[] = [
             For the Slow Cooker, cook on low for 4-6 hours (or high for 2-4). 
             Remove chicken, shred, and return to the pot. Stir together, add a squeeze of fresh lime juice, and serve as is or with avocado and tortilla chips.
         `,
+        recipeCenterpieceType: 'poultry',
+        cookType: 'slow-cooker',
         ingredients: [
             { name: "Boneless, skinless chicken breasts", quantity: 3, unit: "unit" },
             { name: "Coconut milk", quantity: 13.5, unit: "oz" },
