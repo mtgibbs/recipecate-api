@@ -55,7 +55,7 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING!)
         });
 
         app.get('/', (req, res) => {
-            res.send('Hello World!');
+            res.send('The Recipecate API is running!');
         });
     })
     .catch((error) => {
