@@ -27,13 +27,14 @@ export class RecipeService {
             query.recipeCenterpieceType = recipeCenterpieceType;
         }
 
-        const page = searchParameters.page || 1;
+        const page = searchParameters.page || 0;
         const pageSize = searchParameters.pageSize || 10;
 
         const totalCount = await RecipeStore.countDocuments(query);
 
         const recipes = await RecipeStore.find(query)
-            .skip((page - 1) * pageSize)
+            .sort({ name: 1 })
+            .skip(page * pageSize)
             .limit(pageSize);
 
         return {
