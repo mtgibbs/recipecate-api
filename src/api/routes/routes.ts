@@ -26,7 +26,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "CookType": {
         "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["pressure-cooker"]},{"dataType":"enum","enums":["stovetop"]},{"dataType":"enum","enums":["oven"]},{"dataType":"enum","enums":["slow-cooker"]},{"dataType":"enum","enums":["grill"]}],"validators":{}},
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["pressure-cooker"]},{"dataType":"enum","enums":["stovetop"]},{"dataType":"enum","enums":["oven"]},{"dataType":"enum","enums":["slow-cooker"]},{"dataType":"enum","enums":["grill"]},{"dataType":"enum","enums":["multiple"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "RecipeCenterpieceType": {

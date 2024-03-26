@@ -3,12 +3,14 @@ const UNITS_OF_MEASUREMENT = [
     'cup',
     'tsp',
     'tbs',
+    'tbsp',
     'oz',
     'lb',
     'pint',
     'quart',
     'gallon',
-    'g'
+    'g',
+    'to taste',
 ] as const;
 
 type UnitOfMeasurement = typeof UNITS_OF_MEASUREMENT[number];

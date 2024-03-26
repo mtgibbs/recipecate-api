@@ -4,6 +4,7 @@ const COOK_TYPES = [
     'oven',
     'slow-cooker',
     'grill',
+    'multiple',
 ] as const;
 
 type CookType = typeof COOK_TYPES[number];

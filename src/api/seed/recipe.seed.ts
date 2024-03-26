@@ -307,7 +307,27 @@ const seedRecipes: readonly RecipeRequest[] = [
             { name: "Avocado", quantity: 1, unit: "unit", is_optional: true },
             { name: "Tortilla chips", quantity: 1, unit: "unit", is_optional: true }
         ]
-    }
+    },
+    {
+        name: "Sweet Potato and Chickpea Bowl with Tahini Butter",
+        instructions: "1. Melt the vegan butter. Add the tahini, soy sauce, maple syrup, lime juice, and 1 tbsp of warm water to a bowl and mix well. It might curdle but keep mixing and add a little more water if needed to thin it down. Whisk until smooth, about 2 mins.\n2. Prick the sweet potatoes all over with a fork and rub with olive oil, salt, and pepper. Cook using one of the following methods: Oven at 200°C for 40-50 mins, Air Fryer at 190°C for 30-35 mins, turning once or twice, or Microwave on a plate with a kitchen towel for 9 mins, turning at 3 min intervals.\n3. Drain the chickpeas and add them to a large frying pan with olive oil, salt, and pepper. Fry on medium heat for 8 mins until they start to brown. Add the kale and stir for a few minutes until wilted.\n4. Slice cooked potatoes down the middle, optionally add vegan butter, mash slightly, and season.\n5. Scatter chickpeas over the potatoes, drizzle with tahini butter, and finish with crispy chilli oil (if using), sesame seeds, and sliced spring onions.",
+        recipeCenterpieceType: "vegetarian",
+        cookType: "multiple",
+        ingredients: [
+            { "name": "Vegan Butter", "quantity": 1.5, "unit": "oz" },
+            { "name": "Tahini", "quantity": 3, "unit": "tbsp" },
+            { "name": "Soy Sauce", "quantity": 0.5, "unit": "tbsp" },
+            { "name": "Maple Syrup", "quantity": 1, "unit": "tsp" },
+            { "name": "Lime Juice", "quantity": 1, "unit": "tbsp" },
+            { "name": "Sweet Potatoes", "quantity": 4, "unit": "unit" },
+            { "name": "Cooked Chickpeas", "quantity": 17, "unit": "oz" },
+            { "name": "Kale", "quantity": 5.25, "unit": "oz" },
+            { "name": "Sesame Seeds", "quantity": 3, "unit": "tbsp" },
+            { "name": "Crispy Chili Oil", is_optional: true, "quantity": 0, unit: "to taste" },
+            { "name": "Spring Onions", "quantity": 2, "unit": "unit" }
+        ]
+    },
+    
 
 ];
 

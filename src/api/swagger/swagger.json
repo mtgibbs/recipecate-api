@@ -37,7 +37,8 @@
 					"stovetop",
 					"oven",
 					"slow-cooker",
-					"grill"
+					"grill",
+					"multiple"
 				]
 			},
 			"RecipeCenterpieceType": {
